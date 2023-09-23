@@ -4,7 +4,9 @@
 int main(void)
 {
     // TODO: Prompt for start size
-    cout <<'Ingrese el v'
+    char a = "robert";
+    cout << a;
+    return 0;
     // TODO: Prompt for end size
 
     // TODO: Calculate number of years until we reach threshold
