@@ -9,7 +9,7 @@ bool valid(string password);
 
 int main(void)
 {
-    string password = get_string("Enter your password: ");
+    string password = ("Enter your password: ");
     if (valid(password))
     {
         printf("Your password is valid!\n");
