@@ -39,7 +39,6 @@ int main(int argc, string argv[])
         {
             printf("%c", plaintext[i]);
         }
-
     }
-    printf("\n");  //then new line
+    printf("\n"); // then new line
 }
