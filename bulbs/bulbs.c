@@ -37,8 +37,8 @@ int main(void)
             decimal = decimal / 2;
         }
 
-        // Varre toda a lista byte e se o bit for '0', mostra a luz apagada
-        // Se o bit for '1', mostra a luz acesa
+        /* It scans the entire byte list and if the bit is '0',
+        it shows the light off. If the bit is '1', it shows the light on.*/
         for (int j = 0; j < BITS_IN_BYTE; j++)
         {
             if (byte[j] == '1')
