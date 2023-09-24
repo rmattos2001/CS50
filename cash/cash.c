@@ -35,46 +35,37 @@ int main(void)
     printf("%i\n", coins);
 }
 
-// Only change code below
 int get_cents(void)
 {
-    int n;
+    int nCents;
     do
     {
-        n = get_int("Cents Owed: ");
+        nCents = get_int("Quantos centavos é o troco? ");
     }
-    while (n < 0);
-    return n;
+    while (nCents < 0);
+    return nCents;
 }
 
 int calculate_quarters(int cents)
 {
-    if (cents == 25)
-    {
-        return 1;
-    }
+    int quarters = (cents - (cents % 25)) / 25;
+    return quarters;
 }
 
 int calculate_dimes(int cents)
 {
-    if (cents == 10)
-    {
-        return 1;
-    }
+    int dimes = (cents - (cents % 10)) / 10;
+    return dimes;
 }
 
 int calculate_nickels(int cents)
 {
-    if (cents == 5)
-    {
-        return 1;
-    }
+    int nickels = (cents - (cents % 5)) / 5;
+    return nickels;
 }
 
 int calculate_pennies(int cents)
 {
-    if (cents == 1)
-    {
-        return 1;
-    }
+    int pennies = cents;
+    return pennies;
 }
