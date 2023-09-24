@@ -3,12 +3,12 @@
 
 int main(void)
 {
-    long numCartao = get_long("Nº of Card: ");
+    long numCard = get_long("Nº of Card: ");
     int cont = 0;
     int produtoSub = 0;
     int addProd = 0;
     int addSub = 0;
-    int somaNSub = 0;
+    int addNSub = 0;
     int fDigit = 0;
     int sDigit = 0;
     int ultimoDigito;
@@ -33,11 +33,11 @@ int main(void)
         }
         else
         {
-            somaNSub = somaNSub + ultimoDigito;
+            addNSub = addNSub + ultimoDigito;
         }
         numCartao = (numCartao - ultimoDigito) / 10;
     }
-    int somaTot = addSub + somaNSub;
+    int somaTot = addSub + addNSub;
     if (cont == 15 && fDigit == 3 && (sDigit == 4 || sDigit == 7) && somaTot % 10 == 0)
     {
         printf("AMEX\n");
