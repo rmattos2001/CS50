@@ -1,66 +1,45 @@
-#include <stdio.h>
 #include <cs50.h>
-#include <stdlib.h>
-#include <ctype.h>
+#include <stdio.h>
 #include <string.h>
-
-/**
- * caesar.c
- *
- * Encrypts messages using the Caesar cipher. Retrieves the message to encrypt via user prompt.
- *
- * Usage: ./caesar key
- *
- * where key is a non-negative integer that is the cipher key.
- *
- * David Venturi
- */
+#include <ctype.h>
+#include <stdlib.h>
 
 int main(int argc, string argv[])
 {
-    // Check if the user did not enter a command line argument.
-    if(argc == 1) {
-        printf("You did not enter a command line argument for the Caesar encryption key!\n");
-        printf("Please re-run the program and input one non-negative integer as a command line argument.");
+    if (argc != 2)   //to check if command line argument is not equal to 2
+    {
+        printf("Usage: ./caesar key\n"); //print  "Usage: ./caesar key if not equal to 2"
         return 1;
     }
-
-    // Check if the user entered more than one command line argument.
-    else if (argc > 2){
-        printf("You entered too many command line arguments for the Caesar encryption key!\n");
-        printf("Please re-run the program and input one non-negative integer as a command line argument.");
-        return 1;
-    }
-
-    else {
-        // Declare key as an int. Assume that the user will only type integers at the prompt.
-        int key = atoi(argv[1]);
-
-        // The printf below is hidden to satisfy the CS50 automatic grader.
-        // printf("Please enter the phrase you would like to encrypt:\n");
-        string message = GetString();
-
-        int ASCII_A = 65;
-        int ascii_a = 97;
-        int len_alphabet = 26;
-
-        for (int i = 0, n = strlen(message); i < n; i++) {
-
-            // Add key to uppercase letters.
-            if (isupper(message[i]))
-                printf("%c", ((message[i] - ASCII_A + key) % len_alphabet) + ASCII_A);
-
-            // Add key to lowercase letters.
-            else if (islower(message[i]))
-                printf("%c", ((message[i] - ascii_a + key) % len_alphabet) + ascii_a);
-
-            // Leave non-letters alone.
-            else
-                printf("%c", message[i]);
+    int arg_length = strlen(argv[1]);    //to get the length of string in command line argument
+    for (int i = 0; i < arg_length; i++)  //iterate through the length of the argv[1]
+    {
+        if (!isdigit(argv[1][i]))  //to check if character  in argv[1] is not digit
+        {
+            printf("Usage: ./caesar key");  //if not print this //
+            return 1;
         }
     }
 
-    // Exit cleanly.
-    printf("\n");
-    return 0;
+    int key = atoi(argv[1]); //convert string to integer
+    string plaintext = get_string("plaintext: ");  //get plaintext to encipher  from user
+    printf("ciphertext: ");     //print the encipher text here
+    int plaintext_length = strlen(plaintext);  //to check the length of plaintext
+    for (int i = 0; i < plaintext_length; i++)  //iterate through the length of plaintext
+    {
+        if (isupper(plaintext[i]))   // if plaintext character is Upper case.......encipher it with this calculation
+        {
+            printf("%c", (((plaintext[i] - 65) + key) % 26) + 65);   // encipher the text with the calculation
+        }
+        else if (islower(plaintext[i]))  //if plaintext character is lower case.....encipher with the below calculation
+        {
+            printf("%c", (((plaintext[i] - 97) + key) % 26) + 97);  //enciper the text with the calculation
+        }
+        else                       //if not Uppercase or Lowercase, print the character like that
+        {
+            printf("%c", plaintext[i]);
+        }
+
+    }
+    printf("\n");  //then new line
 }
