@@ -8,10 +8,10 @@ void print_bulb(int bit);
 
 int main(void)
 {
-    // Pergunta ao usuário a mensagem a ser codificada
+    // Prompts the user to encrypt the message.
     string msg = get_string("Message: ");
 
-    // Repete até o último caractere da mensagem
+    // Repeat until the last character of the message.
     for (int i = 0; msg[i] != msg[-1]; i++)
     {
         // Define as variáveis
