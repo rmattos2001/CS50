@@ -2,9 +2,9 @@
 // index = 0.0588 * L - 0.296 * S - 15.8
 
 #include <cs50.h>
+#include <math.h>
 #include <stdio.h>
 #include <string.h>
-#include <math.h>
 
 int main(void) // int argc, string argv[]
 {
