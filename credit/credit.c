@@ -3,33 +3,33 @@
 
 int main(void)
 {
-    long numCartao = get_long("Nº do cartão: ");
+    long numCard = get_long("Nº of Card: ");
     int cont = 0;
     int produtoSub = 0;
-    int somaProd = 0;
-    int somaSub = 0;
-    int somaNSub = 0;
+    int addProd = 0;
+    int addSub = 0;
+    int addNSub = 0;
     int fDigit = 0;
     int sDigit = 0;
     int ultimoDigito;
-    while (numCartao != 0)
+    while (numCard != 0)
     {
         cont++;
         sDigit = ultimoDigito;
-        ultimoDigito = numCartao % 10;
+        ultimoDigito = numCard % 10;
         fDigit = ultimoDigito;
         if (cont % 2 == 0)
         {
             produtoSub = ultimoDigito * 2;
             if (produtoSub >= 10)
             {
-                somaProd = produtoSub % 10 + 1;
+                sumaProd = produtoSub % 10 + 1;
             }
             else
             {
-                somaProd = produtoSub;
+                sumaProd = produtoSub;
             }
-            somaSub = somaSub + somaProd;
+            sumaSub = sumaSub + sumaProd;
         }
         else
         {
