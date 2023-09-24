@@ -3,7 +3,7 @@
 
 int main(void)
 {
-    long numCard = get_long("Nº of Card: ");
+    long numCard = get_long("Nº offa Card: ");
     int cont = 0;
     int produtoSub = 0;
     int addProd = 0;
