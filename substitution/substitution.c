@@ -5,12 +5,13 @@
 
 int main(int argc, string argv[])
 {
-    // Declara a chave e uma string com o alfabeto para comparar depois.
     string key = argv[1];
     string alphabet = "abcdefghijklmnopqrstuvwxyz";
 
-    // Mostra na tela mensagens de erro se a chave for inválida (nenhuma ou mais de uma chave,
-    // menos ou mais de 26 letras, letras repetidas, incluir símbolos ou números).
+    /*
+    Displays error messages on the screen if the key is invalid (none or more than one key,
+    less or more than 26 letters, repeated letters, include symbols or numbers).
+    */
     if (argc != 2)
     {
         printf("Usage: ./substitution key\n");
