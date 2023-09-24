@@ -19,7 +19,7 @@ int main(void)
         char byte[BITS_IN_BYTE];
         int pos = BITS_IN_BYTE - 1;
 
-        // Preenche a lista byte com caracteres '0'
+        // Ppreenche a lista de bytes com caracteres '0'
         for (int j = 0; j < BITS_IN_BYTE; j++)
         {
             byte[j] = '0';
