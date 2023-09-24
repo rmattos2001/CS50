@@ -23,30 +23,30 @@ int main(void)
             produtoSub = ultimoDigito * 2;
             if (produtoSub >= 10)
             {
-                sumaProd = produtoSub % 10 + 1;
+                addProd = produtoSub % 10 + 1;
             }
             else
             {
-                sumaProd = produtoSub;
+                addProd = produtoSub;
             }
-            sumaSub = sumaSub + sumaProd;
+            addSub = addSub + addProd;
         }
         else
         {
-            somaNSub = somaNSub + ultimoDigito;
+            addNSub = addNSub + ultimoDigito;
         }
-        numCartao = (numCartao - ultimoDigito) / 10;
+        numCard = (numCard - ultimoDigito) / 10;
     }
-    int somaTot = somaSub + somaNSub;
-    if (cont == 15 && fDigit == 3 && (sDigit == 4 || sDigit == 7) && somaTot % 10 == 0)
+    int addTot = addSub + addaNSub;
+    if (cont == 15 && fDigit == 3 && (sDigit == 4 || sDigit == 7) && addTot % 10 == 0)
     {
         printf("AMEX\n");
     }
-    else if (cont == 16 && fDigit == 5 && sDigit >= 1 && sDigit <= 5 && somaTot % 10 == 0)
+    else if (cont == 16 && fDigit == 5 && sDigit >= 1 && sDigit <= 5 && addTot % 10 == 0)
     {
         printf("MASTERCARD\n");
     }
-    else if ((cont == 13 || cont == 16) && fDigit == 4 && somaTot % 10 == 0)
+    else if ((cont == 13 || cont == 16) && fDigit == 4 && addTot % 10 == 0)
     {
         printf("VISA\n");
     }
