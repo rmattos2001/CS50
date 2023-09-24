@@ -12,7 +12,7 @@ int main(void){
     cout<<"Enter String :\n";
     cin.getline(cadena,200);
     cout<<"The entered text string contains "<<count_sentences(cadena)<<" works.";
-    cout<<"The entered text string contains "<<count_letters(cadena)<<" Letters.";
+    //cout<<"The entered text string contains "<<count_letters(cadena)<<" Letters.";
     return 0;
 }
 
