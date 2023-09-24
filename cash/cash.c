@@ -35,32 +35,46 @@ int main(void)
     printf("%i\n", coins);
 }
 
+// Only change code below
 int get_cents(void)
 {
-    // TODO
-    return 0;
+    int n;
+    do
+    {
+        n = get_int("Cents Owed: ");
+    }
+    while (n < 0);
+    return n;
 }
 
 int calculate_quarters(int cents)
 {
-    // TODO
-    return 0;
+    if (cents == 25)
+    {
+        return 1;
+    }
 }
 
 int calculate_dimes(int cents)
 {
-    // TODO
-    return 0;
+    if (cents == 10)
+    {
+        return 1;
+    }
 }
 
 int calculate_nickels(int cents)
 {
-    // TODO
-    return 0;
+    if (cents == 5)
+    {
+        return 1;
+    }
 }
 
 int calculate_pennies(int cents)
 {
-    // TODO
-    return 0;
+    if (cents == 1)
+    {
+        return 1;
+    }
 }
