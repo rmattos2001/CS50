@@ -3,50 +3,50 @@
 
 int main(void)
 {
-    long numCard = get_long("Nº offa Card: ");
+    long numCartao = get_long("Nº do cartão: ");
     int cont = 0;
     int produtoSub = 0;
-    int addProd = 0;
-    int addSub = 0;
-    int addNSub = 0;
+    int somaProd = 0;
+    int somaSub = 0;
+    int somaNSub = 0;
     int fDigit = 0;
     int sDigit = 0;
     int ultimoDigito;
-    while (numCard != 0)
+    while (numCartao != 0)
     {
         cont++;
         sDigit = ultimoDigito;
-        ultimoDigito = numCard % 10;
+        ultimoDigito = numCartao % 10;
         fDigit = ultimoDigito;
         if (cont % 2 == 0)
         {
             produtoSub = ultimoDigito * 2;
             if (produtoSub >= 10)
             {
-                addProd = produtoSub % 10 + 1;
+                somaProd = produtoSub % 10 + 1;
             }
             else
             {
-                addProd = produtoSub;
+                somaProd = produtoSub;
             }
-            addSub = addSub + addProd;
+            somaSub = somaSub + somaProd;
         }
         else
         {
-            addNSub = addNSub + ultimoDigito;
+            somaNSub = somaNSub + ultimoDigito;
         }
-        numCard = (numCard - ultimoDigito) / 10;
+        numCartao = (numCartao - ultimoDigito) / 10;
     }
-    int addTot = addSub + addaNSub;
-    if (cont == 15 && fDigit == 3 && (sDigit == 4 || sDigit == 7) && addTot % 10 == 0)
+    int somaTot = somaSub + somaNSub;
+    if (cont == 15 && fDigit == 3 && (sDigit == 4 || sDigit == 7) && somaTot % 10 == 0)
     {
         printf("AMEX\n");
     }
-    else if (cont == 16 && fDigit == 5 && sDigit >= 1 && sDigit <= 5 && addTot % 10 == 0)
+    else if (cont == 16 && fDigit == 5 && sDigit >= 1 && sDigit <= 5 && somaTot % 10 == 0)
     {
         printf("MASTERCARD\n");
     }
-    else if ((cont == 13 || cont == 16) && fDigit == 4 && addTot % 10 == 0)
+    else if ((cont == 13 || cont == 16) && fDigit == 4 && somaTot % 10 == 0)
     {
         printf("VISA\n");
     }
