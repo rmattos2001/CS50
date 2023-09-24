@@ -14,7 +14,7 @@ int main(void)
     // Repeat until the last character of the message.
     for (int i = 0; msg[i] != msg[-1]; i++)
     {
-        // Define as variáveis
+        // Define as you vary
         int decimal = msg[i];
         char byte[BITS_IN_BYTE];
         int pos = BITS_IN_BYTE - 1;
