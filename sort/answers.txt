@@ -1,5 +1,8 @@
 sort1 uses: TODO
+
+random5000.txt    : real    0m,905s
 random50000.txt   : real    0m5,905s
+
 reversed50000.txt : real    0m5,905s
 sorted50000.txt   :real    0m0,001s
 
