@@ -80,7 +80,6 @@ bool vote(string name)
         }
     }
 
-    // name does not belong to any candidate
     if (!candidateSeek)
     {
         return false;
@@ -96,7 +95,6 @@ void print_winner(void)
     bool tie = false;
     int winners_count = 1;
 
-    // Confere a quantidade de votos de cada candidato e armazena o(s) com mais votos na lista winners
     for (int i = 0; i < candidate_count; i++)
     {
         if (i == 0)
@@ -111,8 +109,8 @@ void print_winner(void)
             }
             else
             {
-                // Em caso de haver empate mas um candidato ter mais votos que os candidatos empatados
-                // Limpa a lista de ganhadores empatados e declara tal candidato o ganhador
+        //Equality but one candidate has more votes than the tied candidates
+        //Clear the tied winning candidates and declare that candidate the winner.
                 for (int j = 0; j < winners_count; j++)
                 {
                     winners[j] = winners[winners_count];
