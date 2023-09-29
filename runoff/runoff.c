@@ -128,6 +128,16 @@ int main(int argc, string argv[])
 bool vote(int voter, int rank, string name)
 {
     // TODO
+    // Check all candidate
+    for (int i = 0; i < candidate_count; i++)
+    {
+        // Se o nome o qual o eleitor votou for igual ao nome do candidato marca sua preferencia respectiva
+        if (strcmp(name, candidates[i].name) == 0)
+        {
+            preferences[voter][rank] = i;
+            return true;
+        }
+    }
     return false;
 }
 
