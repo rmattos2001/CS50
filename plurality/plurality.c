@@ -80,6 +80,7 @@ bool vote(string name)
         }
     }
 
+
     if (!candidateSeek)
     {
         return false;
