@@ -1,4 +1,11 @@
 sort1 uses: TODO
+real    0m5,905s
+user    0m5,166s
+sys     0m0,168s
+
+real    0m5,905s
+user    0m5,166s
+sys     0m0,168s
 
 How do you know?: TODO
 
