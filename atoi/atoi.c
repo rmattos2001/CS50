@@ -25,5 +25,15 @@ int main(void)
 
 int convert(string input)
 {
-    // TODO
+        int length = strlen(input);
+    if (length == 1)
+    {
+        return (input[0]-48);
+    }
+    else
+    {
+        int last_number = input[length-1] - 48;
+        input[length-1] = '\0';
+        return (last_number + 10 * convert(input));
+    }
 }
