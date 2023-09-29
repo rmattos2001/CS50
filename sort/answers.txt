@@ -31,12 +31,28 @@ sorted50000.txt   :real    0m0,664s
 
 sort2:
 
-random50000 = 0.05s
-reversed50000 = 0.025s
-sorted50000 = 0.051s
+random5000.txt    : real    0m0,019s
+random10000.txt   : real    0m0,047s
+random50000.txt   : real    0m0,661s
+
+reversed5000.txt  : real    0m0,026s
+reversed10000.txt : real    0m0,064s
+reversed50000.txt : real    0m0,619s
+
+sorted5000.txt    : real    0m0,034s
+sorted10000.txt   : real    0m0,037s
+sorted50000.txt   : real    0m0,630s
 
 sort3:
 
-random50000 = 2.5s
-reversed50000 = 2.655s
-sorted50000 = 2.616s
+random5000.txt    : real    0m0,041s
+random10000.txt   : real    0m0,140s
+random50000.txt   : real    0m2,387s
+
+reversed5000.txt  : real    0m0,065s
+reversed50000.txt : real    0m0,160s
+reversed50000.txt : real    0m2,621s
+
+sorted5000.txt    : real    0m0,037s
+sorted10000.txt   : real    0m0,151s
+sorted50000.txt   : real    0m2,252s
