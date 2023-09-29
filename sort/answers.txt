@@ -17,8 +17,14 @@ How do you know?: TODO
 
 sort2 uses: TODO
 
+random5000.txt    : real    0m0,055s
+random10000.txt   : real    0m0,094s
 random50000.txt   : real    0m0,657s
+
+reversed5000.txt  : real    0m0,022s
+reversed10000.txt : real    0m0,048s
 reversed50000.txt : real    0m0,526s
+
 sorted50000.txt   : real    0m0,001s
 
 How do you know?: TODO
