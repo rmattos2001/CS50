@@ -116,6 +116,7 @@ bool vote(int rank, string name, int ranks[])
 void record_preferences(int ranks[])
 {
     // TODO
+    //check if there is a candidate with a better rank and another with a lower rank, it means that he prefers the better rank
     for (int i = 0; i < candidate_count - 1; i++)
     {
         for (int j = 0; j < candidate_count; j++)
@@ -146,7 +147,7 @@ void add_pairs(void)
 void sort_pairs(void)
 {
     // TODO
-    return;
+
 }
 
 // Lock pairs into the candidate graph in order, without creating cycles
