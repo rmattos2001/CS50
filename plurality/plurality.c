@@ -67,7 +67,7 @@ int main(int argc, string argv[])
 bool vote(string name)
 {
     // TODO
-    // Variável para conferir se o nome digitado pertence a um candidato
+
     bool candidateFound = false;
 
     // Compara o nome com cada candidato, se for igual adiciona um voto ao candidato
