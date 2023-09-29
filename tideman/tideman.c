@@ -100,6 +100,16 @@ int main(int argc, string argv[])
 bool vote(int rank, string name, int ranks[])
 {
     // TODO
+    // Varre todos os candidatos, se o nome for igual ao nome do candidato
+    // o adiciona na lista ranks com seu respectivo rank
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (strcmp(name, candidates[i]) == 0)
+        {
+            ranks[rank] = i;
+            return true;
+        }
+    }
     return false;
 }
 
