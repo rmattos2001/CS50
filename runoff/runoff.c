@@ -145,6 +145,19 @@ bool vote(int voter, int rank, string name)
 void tabulate(void)
 {
     // TODO
+    // Check all voters
+    for (int i = 0; i < voter_count; i++)
+    {
+        // Check all voters
+        for (int j = 0; candidate_count; j++)
+        {
+            if (!candidates[preferences[i][j]].eliminated)
+            {
+                candidates[preferences[i][j]].votes++;
+                break;
+            }
+        }
+    }
     return;
 }
 
@@ -152,6 +165,17 @@ void tabulate(void)
 bool print_winner(void)
 {
     // TODO
+    // Check all candidates
+    for (int i = 0; i < candidate_count; i++)
+    {
+        // Checa se os votos de tal candidato constituem mais de 50% do total (arredondado)
+        if (candidates[i].votes > voter_count / 2)
+        {
+            // Mostra na tela o nome do vencedor se houver um
+            printf("%s\n", candidates[i].name);
+            return true;
+        }
+    }
     return false;
 }
 
