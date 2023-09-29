@@ -189,7 +189,7 @@ int find_min(void)
     // Check candidates
     for (int i = 0; i < candidate_count; i++)
     {
-        // 
+        // Eliminating
         if (candidates[i].eliminated == false && candidates[i].votes < min)
         {
             min = candidates[i].votes;
@@ -202,12 +202,27 @@ int find_min(void)
 bool is_tie(int min)
 {
     // TODO
-    return false;
+    // Check candadate
+    for (int i = 0; i < candidate_count; i++)
+    {
+        // Eliminating
+        if (candidates[i].eliminated == false && candidates[i].votes != min)
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 // Eliminate the candidate (or candidates) in last place
 void eliminate(int min)
 {
     // TODO
-    return;
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (candidates[i].eliminated == false && candidates[i].votes == min)
+        {
+            candidates[i].eliminated = true;
+        }
+    }
 }
