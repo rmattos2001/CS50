@@ -1,19 +1,17 @@
 sort1 uses: Bubble sort.
 
-How do you know?: It's times were close to sort3, but in the sorted file
-it was very very fast, showing that it's probably bubble, because when sorted
-it just needs to check the sequence one time, as it won't need to do swaps.
+How do you know?: it was very very fast, showing that it's probably bubble, because when sorted it just needs
+to check the sequence one time.
 
 sort2 uses: Merge sort.
 
-How do you know?: It's times were the fastest and stablest even for the
-largest files, showing that it's probably merge, because it handles very good with long sequences.
+How do you know?: It's times were the fastest and stablest even for the largest files,
+showing that it's probably merge, because it handles very good with long sequences.
 
 sort3 uses: Selection sort.
 
-How do you know?: By elimination, and it's times were very stable, showing that it doesn't care
-if it's already sorted or no, it needs a certain amount of steps to conclude that it's sorted
-but it was slower than sort2, so it's not merge sort.
+How do you know?: By elimination, and it's times were very stable, showing if it's already sorted or no, it needs a
+certain amount of steps to conclude that it's sorted but it was slower than sort2, so it's not merge sort..
 
 times:
 
