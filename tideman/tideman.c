@@ -147,7 +147,7 @@ void add_pairs(void)
                       - preferences[pairs[i].loser][pairs[i].winner];
     }
 
-    // Se a força do par for a maior força, o par é ordenado a posição mais a esquerda da lista
+    // If the pair is the mayor, the pair is ranked in the highest position on the list.
     for (int i = 0; i < pair_count; i++)
     {
         int index = i;
