@@ -15,15 +15,30 @@ How do you know?: TODO
 
 sort2 uses: TODO
 
-real    0m5,905s
-user    0m5,166s
-sys     0m0,168s
+real    0m0,657s
+user    0m0,021s
+sys     0m0,160s
 
 real    0m5,905s
 user    0m5,166s
 sys     0m0,168s
+
+real    0m0,001s
+user    0m0,001s
+sys     0m0,000s
+
 How do you know?: TODO
 
 sort3 uses: TODO
+real    0m0,419s
+user    0m0,750s
+sys     0m0,177s
 
+real    0m0,620s
+user    0m0,971s
+sys     0m0,165s
+
+real    0m0,001s
+user    0m0,001s
+sys     0m0,000s
 How do you know?: TODO
