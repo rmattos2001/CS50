@@ -30,8 +30,15 @@ sorted50000.txt   : real    0m0,001s
 How do you know?: TODO
 
 sort3 uses: TODO
+
+random5000.txt    : real    0m0,041s
+random10000.txt   : real    0m0,140s
 random50000.txt   : real    0m2,387s
+
+reversed5000.txt  : real    0m0,065s
+reversed50000.txt : real    0m0,160s
 reversed50000.txt : real    0m2,621s
+
 sorted50000.txt   : real    0m0,001s
 
 How do you know?: TODO
