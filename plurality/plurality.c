@@ -67,7 +67,25 @@ int main(int argc, string argv[])
 bool vote(string name)
 {
     // TODO
-    return false;
+    // Variável para conferir se o nome digitado pertence a um candidato
+    bool candidateFound = false;
+
+    // Compara o nome com cada candidato, se for igual adiciona um voto ao candidato
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (strcmp(name, candidates[i].name) == 0)
+        {
+            candidates[i].votes++;
+            candidateFound = true;
+        }
+    }
+
+    // Caso em que o nome não pertence a nenhum candidato
+    if (!candidateFound)
+    {
+        return false;
+    }
+    return true;
 }
 
 // Print the winner (or winners) of the election
