@@ -187,6 +187,22 @@ void sort_pairs(void)
     return;
 }
 
+bool hasCycle(int w, int l)
+{
+    if (locked[l][w])
+    {
+        return true;
+    }
+
+    for (int i = 0; i < pair_count; i++)
+    {
+        if (locked[l][i] && hasCycle(w, i))
+        {
+            return true;
+        }
+    }
+    return false;
+}
 // Lock pairs into the candidate graph in order, without creating cycles
 void lock_pairs(void)
 {
