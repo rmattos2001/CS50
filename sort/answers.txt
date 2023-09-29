@@ -1,7 +1,7 @@
 sort1 uses: TODO
 
 
-random5000.txt    :real    0m0,060s
+random5000.txt    :real    0m0,077s
 random10000.txt   :real    0m0,229s
 random50000.txt   :real    0m5,905s
 
