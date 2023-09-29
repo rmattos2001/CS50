@@ -140,6 +140,31 @@ void record_preferences(int ranks[])
 void add_pairs(void)
 {
     // TODO
+    int strength[pair_count];
+    for (int i = 0; i < pair_count; i++)
+    {
+        strength[i] = preferences[pairs[i].winner][pairs[i].loser]
+                      - preferences[pairs[i].loser][pairs[i].winner];
+    }
+
+    // Se a força do par for a maior força, o par é ordenado a posição mais a esquerda da lista
+    for (int i = 0; i < pair_count; i++)
+    {
+        int index = i;
+        for (int j = 1 + i; j < pair_count; j++)
+        {
+            if (strength[j] > strength[index])
+            {
+                index = j;
+            }
+        }
+        int copyStrength = strength[i];
+        strength[i] = strength[index];
+        strength[index] = copyStrength;
+        pair copyPair = pairs[i];
+        pairs[i] = pairs[index];
+        pairs[index] = copyPair;
+    }
     return;
 }
 
