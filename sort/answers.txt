@@ -25,8 +25,9 @@ reversed5000.txt  : real    0m0,022s
 reversed10000.txt : real    0m0,048s
 reversed50000.txt : real    0m0,526s
 
-sorted50000.txt   : real    0m0,001s
-sorted50000.txt   : real    0m0,001s
+sorted5000.txt    : real    0m0,034s
+sorted50000.txt   : real    0m0,077s
+sorted50000.txt   : real    0m0,630s
 
 How do you know?: TODO
 
@@ -42,6 +43,6 @@ reversed50000.txt : real    0m2,621s
 
 sorted5000.txt    : real    0m0,037s
 sorted10000.txt   : real    0m0,151s
-sorted50000.txt   : real    0m0,001s
+sorted50000.txt   : real    0m2,252s
 
 How do you know?: TODO
