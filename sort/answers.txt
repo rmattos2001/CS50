@@ -38,6 +38,8 @@ sorted50000.txt   : real    0m0,630s
 How do you know?: TODO
 
 sort3 uses: TODO
+By elimination, and it's times were very stable, showing if it's already sorted or no, it needs a
+certain amount of steps to conclude that it's sorted but it was slower than sort2, so it's not merge sort.
 
 random5000.txt    : real    0m0,041s
 random10000.txt   : real    0m0,140s
