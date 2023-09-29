@@ -140,6 +140,25 @@ void record_preferences(int ranks[])
 void add_pairs(void)
 {
     // TODO
+    for (int i = 0; i < candidate_count; i++)
+    {
+        for (int j = 0; j < candidate_count; j++)
+        {
+            if (preferences[i][j] > preferences[j][i])
+            {
+                pairs[pair_count].winner = i;
+                pairs[pair_count].loser = j;
+                pair_count++;
+            }
+        }
+    }
+    return;
+}
+
+// Sort pairs in decreasing order by strength of victory
+void sort_pairs(void)
+{
+    // TODO
     int strength[pair_count];
     for (int i = 0; i < pair_count; i++)
     {
@@ -166,13 +185,6 @@ void add_pairs(void)
         pairs[index] = copyPair;
     }
     return;
-}
-
-// Sort pairs in decreasing order by strength of victory
-void sort_pairs(void)
-{
-    // TODO
-
 }
 
 // Lock pairs into the candidate graph in order, without creating cycles
