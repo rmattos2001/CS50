@@ -10,7 +10,7 @@ reversed10000.txt :real    0m0,249s
 reversed50000.txt :real    0m5,905s
 
 sorted5000.txt    :real    0m0,020s
-sorted10000.txt   :real    0m0,043s
+sorted10000.txt   :real    0m0,089s
 sorted50000.txt   :real    0m0,664s
 
 How do you know?: TODO
