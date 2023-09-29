@@ -1,26 +1,21 @@
 sort1 uses: TODO
-real    0m5,905s
-
-real    0m5,905s
-
-real    0m0,001s
+random50000.txt   : real    0m5,905s
+reversed50000.txt : real    0m5,905s
+sorted50000.txt   :real    0m0,001s
 
 How do you know?: TODO
 
 sort2 uses: TODO
 
-real    0m0,657s
-
-real    0m0,526s
-
-real    0m0,001s
+random50000.txt   : real    0m0,657s
+reversed50000.txt : real    0m0,526s
+sorted50000.txt   : real    0m0,001s
 
 How do you know?: TODO
 
 sort3 uses: TODO
-real    0m2,387s
+random50000.txt   : real    0m2,387s
+reversed50000.txt : real    0m2,621s
+sorted50000.txt   : real    0m0,001s
 
-real    0m2,621s
-
-real    0m0,001s
 How do you know?: TODO
