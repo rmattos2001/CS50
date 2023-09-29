@@ -70,7 +70,7 @@ bool vote(string name)
 
     bool candidateFound = false;
 
-    // Compara o nome com cada candidato, se for igual adiciona um voto ao candidato
+    // Evaluate the candidate, if it is the same, add a vote to the candidate
     for (int i = 0; i < candidate_count; i++)
     {
         if (strcmp(name, candidates[i].name) == 0)
