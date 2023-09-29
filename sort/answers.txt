@@ -5,7 +5,10 @@ random5000.txt    : real    0m0,060s
 random10000.txt   : real    0m0,229s
 random50000.txt   : real    0m5,905s
 
+reversed5000.txt  : real    0m0,071s
+reversed10000.txt : real    0m0,249s
 reversed50000.txt : real    0m5,905s
+
 sorted50000.txt   :real    0m0,001s
 
 How do you know?: TODO
