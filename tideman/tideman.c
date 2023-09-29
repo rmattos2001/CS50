@@ -100,8 +100,7 @@ int main(int argc, string argv[])
 bool vote(int rank, string name, int ranks[])
 {
     // TODO
-    // Varre todos os candidatos, se o nome for igual ao nome do candidato
-    // o adiciona na lista ranks com seu respectivo rank
+    // Scan all candidates if the name is the same as the candidate's name or we have included it.
     for (int i = 0; i < candidate_count; i++)
     {
         if (strcmp(name, candidates[i]) == 0)
@@ -117,6 +116,22 @@ bool vote(int rank, string name, int ranks[])
 void record_preferences(int ranks[])
 {
     // TODO
+    for (int i = 0; i < candidate_count - 1; i++)
+    {
+        for (int j = 0; j < candidate_count; j++)
+        {
+            for (int k = 0; k < candidate_count; k++)
+            {
+                for (int l = 0; l < candidate_count; l++)
+                {
+                    if (ranks[i] == j && ranks[k] == l && i < k)
+                    {
+                        preferences[j][l]++;
+                    }
+                }
+            }
+        }
+    }
     return;
 }
 
