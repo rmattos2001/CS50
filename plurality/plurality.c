@@ -68,7 +68,7 @@ bool vote(string name)
 {
     // TODO
 
-    bool candidateFound = false;
+    bool candidateSeek = false;
 
     // Evaluate the candidate, if it is the same, add a vote to the candidate
     for (int i = 0; i < candidate_count; i++)
@@ -76,12 +76,12 @@ bool vote(string name)
         if (strcmp(name, candidates[i].name) == 0)
         {
             candidates[i].votes++;
-            candidateFound = true;
+            candidateSeek = true;
         }
     }
 
     // name does not belong to any candidate
-    if (!candidateFound)
+    if (!candidateSeek)
     {
         return false;
     }
@@ -92,5 +92,48 @@ bool vote(string name)
 void print_winner(void)
 {
     // TODO
+    candidate winners[MAX];
+    bool tie = false;
+    int winners_count = 1;
+
+    // Confere a quantidade de votos de cada candidato e armazena o(s) com mais votos na lista winners
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (i == 0)
+        {
+            winners[0] = candidates[i];
+        }
+        else if (candidates[i].votes > winners[0].votes)
+        {
+            if (!tie)
+            {
+                winners[0] = candidates[i];
+            }
+            else
+            {
+                // Em caso de haver empate mas um candidato ter mais votos que os candidatos empatados
+                // Limpa a lista de ganhadores empatados e declara tal candidato o ganhador
+                for (int j = 0; j < winners_count; j++)
+                {
+                    winners[j] = winners[winners_count];
+                }
+                winners[0] = candidates[i];
+                tie = false;
+                winners_count = 1;
+            }
+        }
+        else if (candidates[i].votes == winners[0].votes)
+        {
+            winners[winners_count] = candidates[i];
+            tie = true;
+            winners_count++;
+        }
+    }
+
+    // List of winner
+    for (int i = 0; i < winners_count; i++)
+    {
+        printf("%s\n", winners[i].name);
+    }
     return;
 }
