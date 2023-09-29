@@ -168,10 +168,10 @@ bool print_winner(void)
     // Check all candidates
     for (int i = 0; i < candidate_count; i++)
     {
-        // Checa se os votos de tal candidato constituem mais de 50% do total (arredondado)
+        // verify if the votes for that candidate are more than 50% of the total voters
         if (candidates[i].votes > voter_count / 2)
         {
-            // Mostra na tela o nome do vencedor se houver um
+            // show name winner
             printf("%s\n", candidates[i].name);
             return true;
         }
@@ -183,7 +183,19 @@ bool print_winner(void)
 int find_min(void)
 {
     // TODO
-    return 0;
+    // Define min voters
+    int min = voter_count;
+
+    // Check candidates
+    for (int i = 0; i < candidate_count; i++)
+    {
+        // 
+        if (candidates[i].eliminated == false && candidates[i].votes < min)
+        {
+            min = candidates[i].votes;
+        }
+    }
+    return min;
 }
 
 // Return true if the election is tied between all candidates, false otherwise
