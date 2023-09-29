@@ -3,15 +3,8 @@ sort1 uses: Bubble sort.
 it was very very fast, showing that it's probably bubble, because when sorted it just needs
 to check the sequence one time
 
-sort2 uses: Merge sort.
-It's times were the fastest and stablest even for the largest files,
-showing that it's probably merge, because it handles very good with long sequences.
-
 sort1 uses: TODO
 sort1 uses: Bubble sort.
-How do you know?: TODO
-it was very very fast, showing that it's probably bubble, because when sorted it just needs
-to check the sequence one time
 
 random5000.txt    :real    0m0,077s
 random10000.txt   :real    0m0,229s
@@ -25,12 +18,12 @@ sorted5000.txt    :real    0m0,020s
 sorted10000.txt   :real    0m0,089s
 sorted50000.txt   :real    0m0,664s
 
-
-
 How do you know?: TODO
 It's times were the fastest and stablest even for the largest files,
 showing that it's probably merge, because it handles very good with long sequences.
 
+sort2 uses: TODO
+sort2 uses: Merge sort.
 random5000.txt    : real    0m0,019s
 random10000.txt   : real    0m0,047s
 random50000.txt   : real    0m0,661s
