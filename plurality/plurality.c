@@ -80,7 +80,7 @@ bool vote(string name)
         }
     }
 
-    // Caso em que o nome não pertence a nenhum candidato
+    // name does not belong to any candidate
     if (!candidateFound)
     {
         return false;
