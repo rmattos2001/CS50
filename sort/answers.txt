@@ -31,7 +31,6 @@ reversed5000.txt  : real    0m0,026s
 reversed10000.txt : real    0m0,064s
 reversed50000.txt : real    0m0,619s
 
-sorted5000.txt    : real    0m0,034s
 sorted10000.txt   : real    0m0,037s
 sorted50000.txt   : real    0m0,630s
 
