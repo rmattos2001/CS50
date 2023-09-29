@@ -108,8 +108,7 @@ void print_winner(void)
             }
             else
             {
-        /*Equality but one candidate has more votes than the tied candidates
-        Clear the tied winning candidates and declare that candidate the winner.*/
+        // Equality but one candidate has more votes than the tied candidates Clear the tied winning candidates and declare that candidate the winner.
                 for (int j = 0; j < winners_count; j++)
                 {
                     winners[j] = winners[winners_count];
