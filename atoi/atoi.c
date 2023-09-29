@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
-int convert(string input);
+int convert(string input);pws
 
 int main(void)
 {
