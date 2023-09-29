@@ -1,5 +1,7 @@
-sort1 uses: TODO
+How do you know?: TODO
 
+
+sort1 uses: TODO
 
 random5000.txt    :real    0m0,077s
 random10000.txt   :real    0m0,229s
@@ -45,4 +47,4 @@ sorted5000.txt    : real    0m0,037s
 sorted10000.txt   : real    0m0,151s
 sorted50000.txt   : real    0m2,252s
 
-How do you know?: TODO
+
