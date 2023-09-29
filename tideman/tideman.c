@@ -191,6 +191,15 @@ void sort_pairs(void)
 void lock_pairs(void)
 {
     // TODO
+    for (int i = 0; i < pair_count; i++)
+    {
+        int w = pairs[i].winner;
+        int l = pairs[i].loser;
+        if (!hasCycle(w, l))
+        {
+            locked[w][l] = true;
+        }
+    }
     return;
 }
 
@@ -198,5 +207,20 @@ void lock_pairs(void)
 void print_winner(void)
 {
     // TODO
+    for (int i = 0; i < candidate_count; i++)
+    {
+        bool isSource = true;
+        for (int j = 0; j < candidate_count; j++)
+        {
+            if (locked[j][i])
+            {
+                isSource = false;
+            }
+        }
+        if (isSource)
+        {
+            printf("%s\n", candidates[i]);
+        }
+    }
     return;
 }
