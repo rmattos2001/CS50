@@ -40,9 +40,11 @@ int get_cents(void)
     // TODO
     int cents;
 
-    do {
+    do
+    {
         cents = get_int("Change Owed: ");
-    } while (cents < 0);
+    }
+    while (cents < 0);
     return cents;
 }
 
