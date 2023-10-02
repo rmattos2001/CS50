@@ -1,7 +1,7 @@
 #include <cs50.h>
+#include <math.h>
 #include <stdio.h>
 #include <string.h>
-#include <math.h>
 
 // Max number of candidates
 #define MAX 9
@@ -17,8 +17,7 @@ typedef struct
 {
     int winner;
     int loser;
-}
-pair;
+} pair;
 
 // Array of candidates
 string candidates[MAX];
@@ -118,7 +117,7 @@ bool vote(int rank, string name, int ranks[])
 void record_preferences(int ranks[])
 {
     // TODO
-    //check if there is a candidate with a better rank and another with a lower rank, it means that he prefers the better rank
+    // check if there is a candidate with a better rank and another with a lower rank, it means that he prefers the better rank
     for (int i = 0; i < candidate_count - 1; i++)
     {
         for (int j = 0; j < candidate_count; j++)
@@ -164,8 +163,7 @@ void sort_pairs(void)
     int strength[pair_count];
     for (int i = 0; i < pair_count; i++)
     {
-        strength[i] = preferences[pairs[i].winner][pairs[i].loser]
-                      - preferences[pairs[i].loser][pairs[i].winner];
+        strength[i] = preferences[pairs[i].winner][pairs[i].loser] - preferences[pairs[i].loser][pairs[i].winner];
     }
 
     // If the pair is the mayor, the pair is ranked in the highest position on the list.
