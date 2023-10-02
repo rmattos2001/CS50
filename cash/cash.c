@@ -37,35 +37,30 @@ int main(void)
 
 int get_cents(void)
 {
-    int nCents;
-    do
-    {
-        nCents = get_int("Quantos centavos é o troco? ");
-    }
-    while (nCents < 0);
-    return nCents;
+    // TODO
+    return 0;
 }
 
 int calculate_quarters(int cents)
 {
-    int quarters = (cents - (cents % 25)) / 25;
-    return quarters;
+    // TODO
+    return 0;
 }
 
 int calculate_dimes(int cents)
 {
-    int dimes = (cents - (cents % 10)) / 10;
-    return dimes;
+    // TODO
+    return 0;
 }
 
 int calculate_nickels(int cents)
 {
-    int nickels = (cents - (cents % 5)) / 5;
-    return nickels;
+    // TODO
+    return 0;
 }
 
 int calculate_pennies(int cents)
 {
-    int pennies = cents;
-    return pennies;
+    // TODO
+    return 0;
 }
