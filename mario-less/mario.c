@@ -28,7 +28,7 @@ void build(int n)
         {
             if (j <= (n - i))
             {
-                //Print blank spaces
+                // Print blank spaces
                 printf(" ");
             }
             else
