@@ -3,27 +3,29 @@
 
 int main(void)
 {
-    // Prompt for start size
-    int start_size;
+    // TODO: Prompt for start size
+    int i;
     do
     {
-        start_size = get_int("Start size: ");
+        i = get_int("Start population: \n");
     }
-    while (start_size < 9);
+    while (i < 9);
 
-    // Prompt for end size
-    int end_size;
+    // TODO: Prompt for end size
+    int j;
     do
     {
-        end_size = get_int("End size: ");
+        j = get_int("End population: \n");
     }
-    while (end_size < start_size);
+    while (j < i);
 
-    // Calculate number of years until we reach threshold
-    // Big O(1)
-    int year = (int) floor(log( (double)end_size/ (double)start_size) / log(13.0/12.0));
-
-
-    // Print number of years
-    printf("Years: %i\n", year);
+    // TODO: Calculate number of years until we reach threshold
+    int years = 0;
+    while (i < j)
+    {
+        i = i + (i / 3) - (i / 4);
+        years++;
+    }
+    // TODO: Print number of years
+    printf("Years: %d\n", years);
 }
