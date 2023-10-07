@@ -146,7 +146,7 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
                 cX = 0;
             }
 
-            // Define e arredonda os valores rgb de acordo com o algoritmo 'Sobel Filter',
+            // Sets and rounds RGB values according to the 'Sobel Filter' algorithm,
             int blue = round(sqrt(blueGx * blueGx + blueGy * blueGy));
             int green = round(sqrt(greenGx * greenGx + greenGy * greenGy));
             int red = round(sqrt(redGx * redGx + redGy * redGy));
