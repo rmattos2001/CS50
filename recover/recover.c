@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // Declara o nome do arquivo e o abre, mostra erro se não for possível abrir.
+    // Declare the file name and open it, showing an error if it cannot be opened.
     char *inputName = argv[1];
     FILE *input = fopen(inputName, "r");
     if (input == NULL)
@@ -25,12 +25,12 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // Declara uma array para guardar o bloco de bytes; um bool para conferir se é um JPEG e um contador de arquivos criados.
+    // Declare an array to store the block of bytes; a bool to check if it is a JPEG and a counter for files created.
     BYTE block[BLOCK_SIZE];
     bool probablyJPEG = false;
-    int outputNumber = 0; // O contador serve para atualizar o nome do arquivo.
+    int outputNumber = 0; // O count.
 
-    // Declara a variável output para ser possível fechar o arquivo após encontrar outro jpeg.
+    // Declare the output variable so you can close the file after finding another jpeg.
     FILE *output = NULL;
 
     // Declara uma variável para conferir se o arquivo output ainda está aberto ou não.
