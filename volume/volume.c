@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     uint8_t tempHeader;
 
     // TODO: Read samples from input file and write updated data to output file
-    // Irá copiar o header, de acordo com seu tamanho dado por HEADER_SIZE
+    // Will copy the header, based on its size given by HEADER_SIZE
     for (int i = 0; i < HEADER_SIZE; i++)
     {
         fread(&tempHeader, sizeof(uint8_t), 1, input);
