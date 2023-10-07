@@ -9,7 +9,7 @@ const int BLOCK_SIZE = 512;
 
 int main(int argc, char *argv[])
 {
-    // Mostra o uso correto do programa, se necessário.
+    // Show correct use of the program if necessary..
     if (argc != 2)
     {
         printf("Usage: ./recover IMAGE\n");
