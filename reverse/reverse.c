@@ -88,10 +88,7 @@ int check_format(WAVHEADER header)
 {
     // TODO #4
     // According to exercise instructions
-    if (header.format[0] == 'W' &&
-        header.format[1] == 'A' &&
-        header.format[2] == 'V' &&
-        header.format[3] == 'E')
+    if (header.format[0] == 'W' && header.format[1] == 'A' && header.format[2] == 'V' && header.format[3] == 'E')
     {
         return 1;
     }
