@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 
     while (fread(block, 1, BLOCK_SIZE, input) == BLOCK_SIZE)
     {
-        // Caso o bloco seja vazio e já tenhamos lido algum arquivo, finaliza o loop e fecha o arquivo.
+        // If the block is empty and we have already read a file, it ends the loop and closes the file.
         bool emptyBlock = true;
         for (int i = 0; i < BLOCK_SIZE; i++)
         {
@@ -55,8 +55,7 @@ int main(int argc, char *argv[])
             break;
         }
 
-        // Se o bloco começar com os bytes característicos de um jpeg: fecha o arquivo anterior - caso exista;
-        // Marca que provavelmente é um novo jpeg; cria um novo arquivo e aumenta o contador.
+        // If the block starts with the characteristic bytes of a jpeg: closes the previous file - if it exists;
         if (block[0] == 0xff && block[1] == 0xd8 && block[2] == 0xff && block[3] >= 0xe0)
         {
             if (outputNumber > 0)
@@ -66,7 +65,7 @@ int main(int argc, char *argv[])
 
             probablyJPEG = true;
 
-            char outputName[8]; // Array de caracteres na qual será armazenado o nome do arquivo ex: 000.txt.
+            char outputName[8]; // Character array in which the file name will be stored ex: 000.txt.
             sprintf(outputName, "%03i.jpg", outputNumber);
 
             output = fopen(outputName, "w");
@@ -79,15 +78,14 @@ int main(int argc, char *argv[])
             outputNumber++;
         }
 
-        // Escreve no arquivo criado um bloco do provável jpeg;
-        // Como esse processo é um loop, vai escrevendo os blocos no output até achar outro provável jpeg ou achar um bloco vazio.
+        // As this process is a loop, it writes blocks to the output until it finds another likely jpeg or finds an empty block.
         if (probablyJPEG)
         {
             fwrite(block, 1, BLOCK_SIZE, output);
         }
     }
 
-    // Se o arquivo output ainda estiver aberto, o fecha.
+    // If the output file is still open, close it.
     if (outputIsOpen)
     {
         fclose(output);
