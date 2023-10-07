@@ -118,7 +118,7 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
     {
         for (int x = 0; x < width; x++)
         {
-            // Define variáveis para o Gx e Gy de cada valor rgb, dois contadores e os fatores do algoritmo
+            // Defines variables for the Gx and Gy of each rgb value, two counters and the algorithm factors
             int blueGx = 0, greenGx = 0, redGx = 0, blueGy = 0, greenGy = 0, redGy = 0;
             int cX = 0, cY = 0;
             int factors[3][3] = {{-1, 0, 1}, {-2, 0, 2}, {-1, 0, 1}};
