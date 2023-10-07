@@ -87,11 +87,20 @@ int main(int argc, char *argv[])
 int check_format(WAVHEADER header)
 {
     // TODO #4
+    // According to exercise instructions
+    if (header.format[0] == 'W' &&
+        header.format[1] == 'A' &&
+        header.format[2] == 'V' &&
+        header.format[3] == 'E')
+    {
+        return 1;
+    }
     return 0;
 }
 
 int get_block_size(WAVHEADER header)
 {
     // TODO #7
+    return header.numChannels * header.bitsPerSample / 8;
     return 0;
 }
