@@ -112,7 +112,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
             int r = 1;
 
             // Checks each pixel and adds their RGB values based on radius
-            // Ex: raio 1 a soma será feita para todas os pixeis até 1 de distância do pixel principal
+            // Ex: Radius 1 the sum will be done for all pixels up to 1 distance from the main pixel.
             for (int row = y - r; row <= y + r; row++)
             {
                 for (int column = x - r; column <= x + r; column++)
