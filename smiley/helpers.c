@@ -10,9 +10,7 @@ void colorize(int height, int width, RGBTRIPLE image[height][width])
         {
             // i=line , j=column
             // If the values for red, green and blue, in the pixel (image[line[column]])
-            if (image[i][j].rgbtBlue == 0
-                && image[i][j].rgbtGreen == 0
-                && image[i][j].rgbtRed == 0)
+            if (image[i][j].rgbtBlue == 0 && image[i][j].rgbtGreen == 0 && image[i][j].rgbtRed == 0)
             {
                 image[i][j].rgbtBlue = 66;
                 image[i][j].rgbtGreen = 94;
