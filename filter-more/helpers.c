@@ -48,6 +48,7 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 // Blur image
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
+    // Copy the image because otherwise, by diffusing a pixel, this will affect the effect afterwards.
     RGBTRIPLE copy[height][width];
     for (int y = 0; y < height; y++)
     {
