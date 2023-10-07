@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     // Declare the output variable so you can close the file after finding another jpeg.
     FILE *output = NULL;
 
-    // Declara uma variável para conferir se o arquivo output ainda está aberto ou não.
+    // Declare a variable to verify whether the output file is still open or not.
     bool outputIsOpen = false;
 
     while (fread(block, 1, BLOCK_SIZE, input) == BLOCK_SIZE)
