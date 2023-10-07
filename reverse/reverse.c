@@ -43,7 +43,6 @@ int main(int argc, char *argv[])
 
     fread(&header, 1, sizeof(WAVHEADER), input);
 
-
     // Use check_format to ensure WAV format
     // TODO #4
     if (!check_format(header))
@@ -75,7 +74,7 @@ int main(int argc, char *argv[])
     BYTE block[blockSize];
     for (int i = 1; i <= blockQuantity; i++)
     {
-        fseek(input, - blockSize * i, SEEK_END); // This is important, it set's the file pointer to the end of the file
+        fseek(input, -blockSize * i, SEEK_END); // This is important, it set's the file pointer to the end of the file
         fread(block, 1, blockSize, input);
         fwrite(block, 1, blockSize, output);
     }
