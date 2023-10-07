@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 
     // TODO: Read samples from input file and write updated data to output file
 
-    // Declara uma variável temporária para armazenar dois bytes do sample
+    // Declare a temporary variable to store two bytes of the sample.
     int16_t tempSample;
 
     // Irá ler desde o fim do header até o fim do arquivo, copiando os samples e os multiplicando pelo fator inserido pelo usuário
