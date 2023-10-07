@@ -25,8 +25,7 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 {
     for (int y = 0; y < height; y++)
     {
-        // Em vez de verificar todas as colunas de pixel, verificaremos apenas metade, pois ao
-        // Trocar metade dos pixeis a outra metade também vai ser trocada
+        // Instead of checking all pixel columns, we will only check the middle, like
         for (int x = 0, temp; x < width / 2; x++)
         {
             // Troca o pixel na coluna x com o pixel na coluna inversa correspondente
