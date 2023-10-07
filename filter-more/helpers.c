@@ -151,7 +151,7 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
             int green = round(sqrt(greenGx * greenGx + greenGy * greenGy));
             int red = round(sqrt(redGx * redGx + redGy * redGy));
 
-            // Limita os valores a um máximo de 255
+            // Limit values to a maximum of 255
             if (blue > 255)
             {
                 blue = 255;
