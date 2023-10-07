@@ -60,7 +60,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
         }
     }
 
-    // Repete o processo para todos os pixeis
+    // Repeat the process for all pixels.
     for (int y = 0; y < height; y++)
     {
         for (int x = 0; x < width; x++)
