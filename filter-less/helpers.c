@@ -127,7 +127,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                 }
             }
 
-            // Tira a média da soma, de acordo com quantos pixels foram somados e arredondando
+            // Take the average of the sum, based on how many pixels were added and rounding
             int averageBlue = round(blueSum * 1.0 / c);
             int averageGreen = round(greenSum * 1.0 / c);
             int averageRed = round(redSum * 1.0 / c);
