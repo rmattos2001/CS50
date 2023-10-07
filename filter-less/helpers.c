@@ -90,7 +90,7 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 // Blur image
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
-    // Copia a imagem pois se não, ao desfocar um pixel, isso vai afetar o efeito no próximo
+    // Copy the image because otherwise blurring one pixel will affect the effect on the next.
     RGBTRIPLE copy[height][width];
     for (int y = 0; y < height; y++)
     {
