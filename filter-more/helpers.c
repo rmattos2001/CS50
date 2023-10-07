@@ -84,12 +84,12 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                 }
             }
 
-            // Tira a média da soma, de acordo com quantos pixels foram somados e arredondando
+            // Take the middle of the shape, according to how many pixels are shaped and rounded.
             int averageBlue = round(blueSum * 1.0 / c);
             int averageGreen = round(greenSum * 1.0 / c);
             int averageRed = round(redSum * 1.0 / c);
 
-            // Muda os valores rgb do pixel para a média rgb dos pixels à sua volta
+            // Changes the RGB values of the pixel to the average RGB of the pixels surrounding it
             image[y][x].rgbtBlue = averageBlue;
             image[y][x].rgbtGreen = averageGreen;
             image[y][x].rgbtRed = averageRed;
@@ -101,5 +101,75 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 // Detect edges
 void edges(int height, int width, RGBTRIPLE image[height][width])
 {
+    // Copia a imagem pois se não, ao desfocar um pixel, isso vai afetar o efeito no próximo
+    RGBTRIPLE copy[height][width];
+    for (int y = 0; y < height; y++)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            copy[y][x].rgbtBlue = image[y][x].rgbtBlue;
+            copy[y][x].rgbtGreen = image[y][x].rgbtGreen;
+            copy[y][x].rgbtRed = image[y][x].rgbtRed;
+        }
+    }
+
+    // Repete o processo para todos os pixeis
+    for (int y = 0; y < height; y++)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            // Define variáveis para o Gx e Gy de cada valor rgb, dois contadores e os fatores do algoritmo
+            int blueGx = 0, greenGx = 0, redGx = 0, blueGy = 0, greenGy = 0, redGy = 0;
+            int cX = 0, cY = 0;
+            int factors[3][3] = {{-1, 0, 1}, {-2, 0, 2}, {-1, 0, 1}};
+
+            // Verifica os pixeis em vorta do pixel principal e soma o produto de seus valores pelo fator
+            for (int row = y - 1; row <= y + 1; row++)
+            {
+                for (int column = x - 1; column <= x + 1; column++)
+                {
+                    // Desconsidera 'pixeis que estariam fora da borda'
+                    if ((row >= 0 && column >= 0) && (row <= height - 1 && column <= width - 1))
+                    {
+                        // Realiza a multiplicação do valor pelo fator
+                        blueGx += (copy[row][column].rgbtBlue * factors[cY][cX]);
+                        greenGx += (copy[row][column].rgbtGreen * factors[cY][cX]);
+                        redGx += (copy[row][column].rgbtRed * factors[cY][cX]);
+
+                        blueGy += (copy[row][column].rgbtBlue * factors[cX][cY]);
+                        greenGy += (copy[row][column].rgbtGreen * factors[cX][cY]);
+                        redGy += (copy[row][column].rgbtRed * factors[cX][cY]);
+                    }
+                    cX++;
+                }
+                cY++;
+                cX = 0;
+            }
+
+            // Define e arredonda os valores rgb de acordo com o algoritmo 'Sobel Filter',
+            int blue = round(sqrt(blueGx * blueGx + blueGy * blueGy));
+            int green = round(sqrt(greenGx * greenGx + greenGy * greenGy));
+            int red = round(sqrt(redGx * redGx + redGy * redGy));
+
+            // Limita os valores a um máximo de 255
+            if (blue > 255)
+            {
+                blue = 255;
+            }
+            if (green > 255)
+            {
+                green = 255;
+            }
+            if (red > 255)
+            {
+                red = 255;
+            }
+
+            // Changes the RGB values of the pixel to values found in the 'Sobel Filter' algorithm above
+            image[y][x].rgbtBlue = blue;
+            image[y][x].rgbtGreen = green;
+            image[y][x].rgbtRed = red;
+        }
+    }
     return;
 }
