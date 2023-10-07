@@ -10,7 +10,6 @@ void colorize(int height, int width, RGBTRIPLE image[height][width])
         {
             // i=line , j=column
             // If the values for red, green and blue, in the pixel (image[line[column]])
-            // are all '0', than the pixel is black and we should change its color
             if (image[i][j].rgbtBlue == 0
                 && image[i][j].rgbtGreen == 0
                 && image[i][j].rgbtRed == 0)
