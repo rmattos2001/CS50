@@ -65,7 +65,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
     {
         for (int x = 0; x < width; x++)
         {
-            // Define variáveis para a soma de cada valor rgb, contador e raio do blur
+            // Set variables for the sum of each RGB value, counter and blur radius
             int blueSum = 0, greenSum = 0, redSum = 0, c = 0;
             int r = 1;
 
