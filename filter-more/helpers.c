@@ -101,7 +101,6 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 // Detect edges
 void edges(int height, int width, RGBTRIPLE image[height][width])
 {
-    // Copia a imagem pois se não, ao desfocar um pixel, isso vai afetar o efeito no próximo
     RGBTRIPLE copy[height][width];
     for (int y = 0; y < height; y++)
     {
@@ -113,7 +112,7 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
         }
     }
 
-    // Repete o processo para todos os pixeis
+    // Repeat process for all pixels
     for (int y = 0; y < height; y++)
     {
         for (int x = 0; x < width; x++)
