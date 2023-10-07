@@ -4,7 +4,7 @@ void colorize(int height, int width, RGBTRIPLE image[height][width])
 {
     // Change all black pixels to a color of your choosing
     // By checking every line column of the image (all pixels)
-    for (int line = 0; line < height; line++)
+    for (int i = 0; line < height; line++)
     {
         for (int column = 0; column < width; column++)
         {
