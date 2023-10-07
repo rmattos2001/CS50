@@ -39,7 +39,7 @@ void sepia(int height, int width, RGBTRIPLE image[height][width])
             int sepiaGreen = round(.349 * originalRed + .686 * originalGreen + .168 * originalBlue);
             int sepiaRed = round(.393 * originalRed + .769 * originalGreen + .189 * originalBlue);
 
-            // Limita a versão sépia a um máximo de 255
+            // Limits the sepia version to a maximum of 255
             if (sepiaRed > 255)
             {
                 sepiaRed = 255;
@@ -53,7 +53,6 @@ void sepia(int height, int width, RGBTRIPLE image[height][width])
                 sepiaBlue = 255;
             }
 
-            // Muda os valores rgb do pixel para suas versões sépia
             image[y][x].rgbtBlue = sepiaBlue;
             image[y][x].rgbtGreen = sepiaGreen;
             image[y][x].rgbtRed = sepiaRed;
@@ -65,6 +64,26 @@ void sepia(int height, int width, RGBTRIPLE image[height][width])
 // Reflect image horizontally
 void reflect(int height, int width, RGBTRIPLE image[height][width])
 {
+    for (int y = 0; y < height; y++)
+    {
+        // Instead of checking all columns of pixels, we will only check half, like
+        // Trocar metade dos pixeis a outra metade também vai ser trocada
+        for (int x = 0, temp; x < width / 2; x++)
+        {
+            // Troca o pixel na coluna x com o pixel na coluna inversa correspondente
+            temp = image[y][x].rgbtBlue;
+            image[y][x].rgbtBlue = image[y][width - 1 - x].rgbtBlue;
+            image[y][width - 1 - x].rgbtBlue = temp;
+
+            temp = image[y][x].rgbtGreen;
+            image[y][x].rgbtGreen = image[y][width - 1 - x].rgbtGreen;
+            image[y][width - 1 - x].rgbtGreen = temp;
+
+            temp = image[y][x].rgbtRed;
+            image[y][x].rgbtRed = image[y][width - 1 - x].rgbtRed;
+            image[y][width - 1 - x].rgbtRed = temp;
+        }
+    }
     return;
 }
 
