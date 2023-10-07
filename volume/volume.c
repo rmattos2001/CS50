@@ -45,11 +45,10 @@ int main(int argc, char *argv[])
     }
 
     // TODO: Read samples from input file and write updated data to output file
-
     // Declare a temporary variable to store two bytes of the sample.
     int16_t tempSample;
 
-    // Irá ler desde o fim do header até o fim do arquivo, copiando os samples e os multiplicando pelo fator inserido pelo usuário
+    // It will read from the end of the header to the end of the file, copying the samples and multiplying them by the factor entered by the user.
     while (fread(&tempSample, sizeof(int16_t), 1, input))
     {
         tempSample *= factor;
