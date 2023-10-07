@@ -128,10 +128,10 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
             {
                 for (int column = x - 1; column <= x + 1; column++)
                 {
-                    // Desconsidera 'pixeis que estariam fora da borda'
+                    // Ignore 'pixels that would be outside the border'
                     if ((row >= 0 && column >= 0) && (row <= height - 1 && column <= width - 1))
                     {
-                        // Realiza a multiplicação do valor pelo fator
+                        // Multiply the value by the factor.
                         blueGx += (copy[row][column].rgbtBlue * factors[cY][cX]);
                         greenGx += (copy[row][column].rgbtGreen * factors[cY][cX]);
                         redGx += (copy[row][column].rgbtRed * factors[cY][cX]);
