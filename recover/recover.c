@@ -9,14 +9,14 @@ const int BLOCK_SIZE = 512;
 
 int main(int argc, char *argv[])
 {
-    // Show correct use of the program if necessary..
+    // Show correct use of the program if necessary.
     if (argc != 2)
     {
         printf("Usage: ./recover IMAGE\n");
         return 1;
     }
 
-    // Declare the file name and open it, showing an error if it cannot be opened.
+    // Declare the file name and open it, displaying an error if it cannot be opened.
     char *inputName = argv[1];
     FILE *input = fopen(inputName, "r");
     if (input == NULL)
