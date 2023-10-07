@@ -123,7 +123,7 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
             int cX = 0, cY = 0;
             int factors[3][3] = {{-1, 0, 1}, {-2, 0, 2}, {-1, 0, 1}};
 
-            // Verifica os pixeis em vorta do pixel principal e soma o produto de seus valores pelo fator
+            // Check the pixels around the main pixel and add the product of their values by the factor
             for (int row = y - 1; row <= y + 1; row++)
             {
                 for (int column = x - 1; column <= x + 1; column++)
