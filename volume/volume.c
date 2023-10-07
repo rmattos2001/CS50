@@ -48,13 +48,13 @@ int main(int argc, char *argv[])
     // Declare a temporary variable to store two bytes of the sample.
     int16_t tempSample;
 
-    // It will read from the end of the header to the end of the file, copying the samples and multiplying them by the factor entered by the user.
+    // It will read from the end of the header to the end of the file, copying the samples and multiplying them by the factor
+    // entered by the user.
     while (fread(&tempSample, sizeof(int16_t), 1, input))
     {
         tempSample *= factor;
         fwrite(&tempSample, sizeof(uint16_t), 1, output);
     }
-
 
     // Close files
     fclose(input);
