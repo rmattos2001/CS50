@@ -102,5 +102,4 @@ int get_block_size(WAVHEADER header)
 {
     // TODO #7
     return header.numChannels * header.bitsPerSample / 8;
-    return 0;
 }
