@@ -102,12 +102,12 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
         }
     }
 
-    // Repete o processo para todos os pixeis
+    // Repeat the process for all pixels.
     for (int y = 0; y < height; y++)
     {
         for (int x = 0; x < width; x++)
         {
-            // Define variáveis para a soma de cada valor rgb, contador e raio do blur
+            // Establish variables for the sum of each RGB value, counter and blur radio
             int blueSum = 0, greenSum = 0, redSum = 0, c = 0;
             int r = 1;
 
