@@ -23,6 +23,26 @@ node *table[N];
 bool check(const char *word)
 {
     // TODO
+bool check(const char *word)
+{
+    // The idea is the same as in free_bucket(), but instead of calling free;
+    // We compare the strings
+    node *cursor = table[hash(word)];
+    if (cursor != NULL)
+    {
+        while (cursor->next != NULL)
+        {
+            if (strcasecmp(word, cursor->word) == 0)
+            {
+                return true;
+            }
+            cursor = cursor->next;
+        }
+        if (strcasecmp(word, cursor->word) == 0)
+        {
+            return true;
+        }
+    }
     return false;
 }
 
