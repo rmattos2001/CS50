@@ -26,17 +26,22 @@ bool check(const char *word)
     // The idea is the same as in free_bucket(), but instead of calling free;
     // We compare the strings
     node *cursor = table[hash(word)];
-    if (cursor != NULL)
+    char string[strlen(word)];
+    strcpy(string, word);
+
+    // Convert strint to Lowercase
+    for (int i = 0; string[i] != '\0'; i++)
     {
-        while (cursor->next != NULL)
-        {
-            if (strcasecmp(word, cursor->word) == 0)
-            {
-                return true;
-            }
-            cursor = cursor->next;
-        }
-        if (strcasecmp(word, cursor->word) == 0)
+        string[i] = tolower(string[i]);
+    }
+
+    // Retive the Hash value
+    int index = hash(string);
+
+    // Search the string in the dictionary
+    for (node *tmp = table[index]; tmp != NULL; tmp = tmp->next)
+    {
+        if (strcmp(string, tmp->word) == 0)
         {
             return true;
         }
