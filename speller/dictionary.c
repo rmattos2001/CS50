@@ -2,6 +2,9 @@
 
 #include <ctype.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 #include "dictionary.h"
 
@@ -13,19 +16,19 @@ typedef struct node
 }
 node;
 
-// TODO: Choose number of buckets in hash table
-const unsigned int N = 25876; // Looks like a nice number, hash of 45 z's + 1 idk
+// Choose number of buckets in hash table
+//const unsigned int N = 26;
+const unsigned int N = 3440;
 
 // Hash table
 node *table[N];
 
+// Dictionary size
+int dict_size = 0;
+
 // Returns true if word is in dictionary, else false
 bool check(const char *word)
 {
-    // TODO
-    // The idea is the same as in free_bucket(), but instead of calling free;
-    // We compare the strings
-    node *cursor = table[hash(word)];
     char string[strlen(word)];
     strcpy(string, word);
 
@@ -46,39 +49,97 @@ bool check(const char *word)
             return true;
         }
     }
+
     return false;
 }
 
 // Hashes word to a number
 unsigned int hash(const char *word)
 {
-    // TODO: Improve this hash function
+    // Improve this hash function
     //return toupper(word[0]) - 'A';
-    int hash = 0;
+
+    unsigned int hash_value = 0;
+
     for (int i = 0; word[i] != '\0'; i++)
     {
-        hash += (tolower(word[i]) - 'a') * (i + 1);
+        hash_value += toupper(word[i]);
     }
-    return hash % N;
+
+    return hash_value;
 }
 
 // Loads dictionary into memory, returning true if successful, else false
 bool load(const char *dictionary)
 {
-    // TODO
-    return false;
+    // Open Dictionary File
+    FILE *file = fopen(dictionary, "r");
+    if (file == NULL)
+    {
+        fclose(file);
+        return false;
+    }
+
+    // Read Strings from File
+    char buffer[LENGTH + 1];
+    while (fscanf(file, "%s", buffer) != EOF)
+    {
+        // Create a New Node
+        node *n = malloc(sizeof(node));
+        if (n == NULL)
+        {
+            fclose(file);
+            return false;
+        }
+        strcpy(n->word, buffer);
+        n->next = NULL;
+
+        // Hash Word
+        int index = hash(buffer);
+
+        // Insert Node into Hash Table
+        if (table[index] == NULL)
+        {
+            table[index] = n;
+        }
+        else
+        {
+            n->next = table[index];
+            table[index] = n;
+        }
+
+        // Increment the word counter
+        dict_size++;
+    }
+
+    // Close Dictionary File
+    fclose(file);
+
+    return true;
 }
 
 // Returns number of words in dictionary if loaded, else 0 if not yet loaded
 unsigned int size(void)
 {
-    // TODO
-    return 0;
+    return dict_size;
 }
+
 
 // Unloads dictionary from memory, returning true if successful, else false
 bool unload(void)
 {
-    // TODO
-    return false;
+    node *next_node;
+
+    for (int i = 0; i < N; i++)
+    {
+        while (table[i] != NULL)
+        {
+            next_node = table[i]->next;
+            free(table[i]);
+            table[i] = next_node;
+        }
+    }
+    free(*table);
+
+    return true;
 }
