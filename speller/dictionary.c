@@ -2,10 +2,10 @@
 
 #include <ctype.h>
 #include <stdbool.h>
-#include <strings.h>
-#include <string.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <strings.h>
 
 #include "dictionary.h"
 
@@ -14,8 +14,7 @@ typedef struct node
 {
     char word[LENGTH + 1];
     struct node *next;
-}
-node;
+} node;
 
 // TODO: Choose number of buckets in hash table
 const unsigned int N = 25876; // Looks like a nice number, hash of 45 z's + 1 idk
