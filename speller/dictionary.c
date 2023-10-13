@@ -23,8 +23,6 @@ node *table[N];
 bool check(const char *word)
 {
     // TODO
-bool check(const char *word)
-{
     // The idea is the same as in free_bucket(), but instead of calling free;
     // We compare the strings
     node *cursor = table[hash(word)];
@@ -50,7 +48,13 @@ bool check(const char *word)
 unsigned int hash(const char *word)
 {
     // TODO: Improve this hash function
-    return toupper(word[0]) - 'A';
+    //return toupper(word[0]) - 'A';
+    int hash = 0;
+    for (int i = 0; word[i] != '\0'; i++)
+    {
+        hash += (tolower(word[i]) - 'a') * (i + 1);
+    }
+    return hash % N;
 }
 
 // Loads dictionary into memory, returning true if successful, else false
