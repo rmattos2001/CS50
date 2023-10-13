@@ -10,8 +10,7 @@ typedef struct person
 {
     struct person *parents[2];
     char alleles[2];
-}
-person;
+} person;
 
 const int GENERATIONS = 3;
 const int INDENT_LENGTH = 4;
@@ -41,7 +40,7 @@ person *create_family(int generations)
 {
     // TODO: Allocate memory for new person
     person *new_person = malloc(sizeof(person));
-    
+
     // If there are still generations left to create
     if (generations > 1)
     {
@@ -56,7 +55,6 @@ person *create_family(int generations)
         // TODO: Randomly assign current person's alleles based on the alleles of their parents
         new_person->alleles[0] = new_person->parents[0]->alleles[rand() % 2];
         new_person->alleles[1] = new_person->parents[1]->alleles[rand() % 2];
-
     }
 
     // If there are no generations left to create
@@ -95,7 +93,6 @@ void free_family(person *p)
     // TODO: Free child
     free(p);
     return;
-
 }
 
 // Print each family member and their alleles.
