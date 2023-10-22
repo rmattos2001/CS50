@@ -97,14 +97,23 @@ def terminal(board):
         return True
     else:
         return False
-    #return True if winner(board) is not None or (not any(EMPTY in sublist for sublist in board) and winner(board) is None) else False # noqa E501
+    #return True if winner(board) is not None or
+    #not any(EMPTY in sublist for sublist in board
+    #and winner(board) is None else False
 
 
 def utility(board):
     """
     Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
     """
-    raise NotImplementedError
+    if terminal(board):
+        if winner(board) == X:
+            return 1
+        elif winner(board) == O:
+            return -1
+        else:
+            return 0
+    # Check how to handle exception when a non terminal board is received.
 
 
 def minimax(board):
