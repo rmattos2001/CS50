@@ -24,8 +24,16 @@ knowledge0 = And(
 # Puzzle 1
 # A says "We are both knaves."
 # B says nothing.
+# A says "We are both knaves."
+# B says nothing.
 knowledge1 = And(
-    # TODO
+    # A and B are knights or knaves but not both:
+    And(Or(AKnight, AKnave), Not(And(AKnight, AKnave))),
+    And(Or(BKnight, BKnave), Not(And(BKnight, BKnave))),
+    # If A is a knight, A and B are both knaves:
+    Implication(AKnight, And(AKnave, BKnave)),
+    # If A is a knave, his statement is false:
+    Implication(AKnave, Not(And(AKnave, BKnave)))
 )
 
 # Puzzle 2
