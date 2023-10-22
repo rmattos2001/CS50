@@ -68,8 +68,7 @@ def transition_model(corpus, page, damping_factor):
             prop_dist[key] = 1 / dict_len
 
     else:
-        # there are outgoing pages, calculating distribution
-        random_factor = (1 - damping_factor) / dict_len
+        random_factor = (1 - damping_factor) / dict_len # there are outgoing pages, calculating distribution
         even_factor = damping_factor / pages_len
 
         for key in corpus.keys():
@@ -90,7 +89,32 @@ def sample_pagerank(corpus, damping_factor, n):
     their estimated PageRank value (a value between 0 and 1). All
     PageRank values should sum to 1.
     """
-    raise NotImplementedError
+    # prepare dictionary with number of samples == 0
+    samples_dict = corpus.copy()
+    for i in samples_dict:
+        samples_dict[i] = 0
+    sample = None
+
+    # itearting n times
+    for _ in range(n):
+        if sample:
+            # previous sample is available, choosing using transition model
+            dist = transition_model(corpus, sample, damping_factor)
+            dist_lst = list(dist.keys())
+            dist_weights = [dist[i] for i in dist]
+            sample = random.choices(dist_lst, dist_weights, k=1)[0]
+        else:
+            # no previous sample, choosing randomly
+            sample = random.choice(list(corpus.keys()))
+
+        # count each sample
+        samples_dict[sample] += 1
+
+    # turn sample count to percentage
+    for item in samples_dict:
+        samples_dict[item] /= n
+
+    return samples_dict
 
 
 def iterate_pagerank(corpus, damping_factor):
