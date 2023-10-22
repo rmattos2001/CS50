@@ -191,7 +191,39 @@ class MinesweeperAI():
             5) add any new sentences to the AI's knowledge base
                if they can be inferred from existing knowledge
         """
-        raise NotImplementedError
+        # mark the cell as one of the moves made in the game
+        self.moves_made.add(cell)
+
+        # mark the cell as a safe cell, updating any sequences that contain the cell as well
+        self.mark_safe(cell)
+
+        # add new sentence to AI knowledge base based on value of cell and count
+        cells = set()
+        count_cpy = copy.deepcopy(count)
+        close_cells = self.return_close_cells(cell)     # returns neighbour cells
+        for cl in close_cells:
+            if cl in self.mines:
+                count_cpy -= 1
+            if cl not in self.mines | self.safes:
+                cells.add(cl)                           # only add cells that are of unknown state
+
+        new_sentence = Sentence(cells, count_cpy)           # prepare new sentence
+
+        if len(new_sentence.cells) > 0:                 # add that sentence to knowledge only if it is not empty
+            self.knowledge.append(new_sentence)
+            # print(f"Adding new sentence: {new_sentence}")
+
+        # # print("Printing knowledge:")
+        # for sent in self.knowledge:
+        #     # print(sent)
+
+        # check sentences for new cells that could be marked as safe or as mine
+        self.check_knowledge()
+        # print(f"Safe cells: {self.safes - self.moves_made}")
+        # print(f"Mine cells: {self.mines}")
+        # print("------------")
+
+        self.extra_inference()
 
     def make_safe_move(self):
         """
