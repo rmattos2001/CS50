@@ -64,8 +64,7 @@ def transition_model(corpus, page, damping_factor):
     pages_len = len(corpus[page])
 
     if len(corpus[page]) < 1:
-        # no outgoing pages, choosing randomly from all possible pages
-        for key in corpus.keys():
+        for key in corpus.keys():  # no outgoing pages, choosing randomly from all possible pages
             prop_dist[key] = 1 / dict_len
 
     else:
