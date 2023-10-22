@@ -211,17 +211,10 @@ class MinesweeperAI():
 
         if len(new_sentence.cells) > 0:                 # add that sentence to knowledge only if it is not empty
             self.knowledge.append(new_sentence)
-            # print(f"Adding new sentence: {new_sentence}")
-
-        # # print("Printing knowledge:")
-        # for sent in self.knowledge:
-        #     # print(sent)
 
         # check sentences for new cells that could be marked as safe or as mine
         self.check_knowledge()
-        # print(f"Safe cells: {self.safes - self.moves_made}")
-        # print(f"Mine cells: {self.mines}")
-        # print("------------")
+
 
         self.extra_inference()
 
