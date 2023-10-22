@@ -204,18 +204,19 @@ class MinesweeperAI():
         for cl in close_cells:
             if cl in self.mines:
                 count_cpy -= 1
+            # only add cells that are of unknown state
             if cl not in self.mines | self.safes:
-                cells.add(cl)                           # only add cells that are of unknown state
+                cells.add(cl)
 
-        new_sentence = Sentence(cells, count_cpy)           # prepare new sentence
+        # prepare new sentence
+        new_sentence = Sentence(cells, count_cpy)
 
-        if len(new_sentence.cells) > 0:                 # add that sentence to knowledge only if it is not empty
+        # add that sentence to knowledge only if it is not empty
+        if len(new_sentence.cells) > 0:
             self.knowledge.append(new_sentence)
 
         # check sentences for new cells that could be marked as safe or as mine
         self.check_knowledge()
-
-
         self.extra_inference()
 
     def make_safe_move(self):
