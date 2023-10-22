@@ -89,8 +89,8 @@ def sample_pagerank(corpus, damping_factor, n):
     their estimated PageRank value (a value between 0 and 1). All
     PageRank values should sum to 1.
     """
-    # prepare dictionary with number of samples == 0
-    samples_dict = corpus.copy()
+
+    samples_dict = corpus.copy() # prepare dictionary with number of samples == 0
     for i in samples_dict:
         samples_dict[i] = 0
     sample = None
@@ -98,7 +98,7 @@ def sample_pagerank(corpus, damping_factor, n):
     # itearting n times
     for _ in range(n):
         if sample:
-            # previous sample is available, choosing using transition model
+            # sample previous, choosing using transition model
             dist = transition_model(corpus, sample, damping_factor)
             dist_lst = list(dist.keys())
             dist_weights = [dist[i] for i in dist]
