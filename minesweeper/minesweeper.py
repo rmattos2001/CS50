@@ -191,13 +191,13 @@ class MinesweeperAI():
             5) add any new sentences to the AI's knowledge base
                if they can be inferred from existing knowledge
         """
-        # mark the cell as one of the moves made in the game
+        # 1. mark the cell as one of the moves made in the game
         self.moves_made.add(cell)
 
-        # mark the cell as a safe cell, updating any sequences that contain the cell as well
+        # 2. mark the cell as a safe cell, updating any sequences that contain the cell as well
         self.mark_safe(cell)
 
-        # add new sentence to AI knowledge base based on value of cell and count
+        # 3. add new sentence to AI knowledge base based on value of cell and count
         cells = set()
         count_cpy = copy.deepcopy(count)
         close_cells = self.return_close_cells(cell)     # returns neighbour cells
