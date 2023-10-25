@@ -109,8 +109,7 @@ class CrosswordCreator():
             # iterate through words in domain
             for word in domain_copy[variable]:
                 if len(word) != length:
-                    # if length of the word doesn't fit variable, delete it from
-                    # the original domain (not copy)
+                    # If the length is not valid, it is removed from the original domain
                     self.domains[variable].remove(word)
 
     def revise(self, x, y):
@@ -122,7 +121,35 @@ class CrosswordCreator():
         Return True if a revision was made to the domain of `x`; return
         False if no revision was made.
         """
-        raise NotImplementedError
+        # getting x and y ovelapping cells, unpack cords to variables
+        xoverlap, yoverlap = self.crossword.overlaps[x, y]
+
+        # make variable describing if revision was made
+        revision_made = False
+
+        # making domains copy
+        domains_copy = copy.deepcopy(self.domains)
+
+        # if overlap occurs
+        if xoverlap:
+            # iterate through words in x's domain
+            for xword in domains_copy[x]:
+                matched_value = False
+                # iterate through words in y's domain
+                for yword in self.domains[y]:
+                    # if x's word and y's word have same letter in overlapping position
+                    if xword[xoverlap] == yword[yoverlap]:
+                        matched_value = True
+                        break   # no need to check rest of y's words for that x
+                if matched_value:
+                    continue   # if x and y was matched, proceed with another x
+                else:
+                    self.domains[x].remove(xword) # no matching y's word to x, removing word from domain
+                    revision_made = True
+
+        # return bolean if revision was made
+        return revision_made
+
 
     def ac3(self, arcs=None):
         """
