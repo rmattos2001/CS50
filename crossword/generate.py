@@ -125,7 +125,7 @@ class CrosswordCreator():
         xoverlap, yoverlap = self.crossword.overlaps[x, y]
 
         # make variable describing if revision was made
-        revision_made = False
+        copy_made = False
 
         # making domains copy
         domains_copy = copy.deepcopy(self.domains)
@@ -145,10 +145,10 @@ class CrosswordCreator():
                     continue   # if x and y was matched, proceed with another x
                 else:
                     self.domains[x].remove(xword) # no matching y's word to x, removing word from domain
-                    revision_made = True
+                    copy_made = True
 
         # return bolean if revision was made
-        return revision_made
+        return copy_made
 
 
     def ac3(self, arcs=None):
