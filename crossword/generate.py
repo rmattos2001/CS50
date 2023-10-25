@@ -102,7 +102,7 @@ class CrosswordCreator():
          # deep copy of domains
         domain_copy = copy.deepcopy(self.domains)
 
-        # iterate through domains copy
+        # iterate with through domains copy
         for variable in domain_copy:
             # getting the variable length
             length = variable.length
