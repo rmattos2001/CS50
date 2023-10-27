@@ -81,25 +81,25 @@ def get_model():
             32, (3, 3), activation="relu", input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)
         ),
 
-        # Max-pooling layer, using 2x2 pool size
-        tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
+
+        tf.keras.layers.MaxPooling2D(pool_size=(2, 2)), # Max-pooling layer, using 2x2 pool size
 
         tf.keras.layers.Conv2D(
             32, (3, 3), activation="relu", input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)
         ),
 
-        # Max-pooling layer, using 2x2 pool size
-        tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
 
-        # Flatten units
-        tf.keras.layers.Flatten(),
+        tf.keras.layers.MaxPooling2D(pool_size=(2, 2)), # Max-pooling layer, using 2x2 pool size
 
-        # Add a hidden layer with dropout
-        tf.keras.layers.Dense(128, activation="relu"),
+
+        tf.keras.layers.Flatten(), # Flatten units
+
+
+        tf.keras.layers.Dense(128, activation="relu"), # Add a hidden layer with dropout
         tf.keras.layers.Dropout(0.5),
 
-        # Add an output layer with output units for all 10 digits
-        tf.keras.layers.Dense(NUM_CATEGORIES, activation="softmax")
+
+        tf.keras.layers.Dense(NUM_CATEGORIES, activation="softmax")# Add an output layer with output units for all 10 digits
     ])
 
     model.compile(
@@ -107,8 +107,6 @@ def get_model():
         loss="categorical_crossentropy",
         metrics=["accuracy"]
     )
-
-    model.summary()
 
     return model
 
