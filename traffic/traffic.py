@@ -60,6 +60,7 @@ def load_data(data_dir):
     """
     for directory in os.listdir(data_dir): # iterate through data set directories
         print(f"Started loading files from {directory} directory")
+        # iterate through single image files
         for file in os.listdir(os.path.join(data_dir, directory)):
             img = cv2.imread(os.path.join(data_dir, directory, file))
             resized = cv2.resize(img, (IMG_WIDTH, IMG_HEIGHT))
@@ -67,19 +68,6 @@ def load_data(data_dir):
             labels.append(int(directory))
         print(f"Ended loading files from {directory} directory")
     return images, labels
-
-    # iterate through data set directories
-    for directory in os.listdir(data_dir):
-        # iterate through single image files
-        print(f"Started loading files from {directory} directory")
-        for file in os.listdir(os.path.join(data_dir, directory)):
-            image = cv2.imread(os.path.join(data_dir, directory, file))
-            resized = cv2.resize(image, (IMG_WIDTH, IMG_HEIGHT))
-            images.append(resized)
-            labels.append(int(directory))
-        print(f"Ended loading files from {directory} directory")
-    return images, labels
-
 
 def get_model():
     """
