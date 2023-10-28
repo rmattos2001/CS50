@@ -4,7 +4,6 @@ def main() -> None:
 
     # Checks if it's a valid credit card number by Luhn's Algorithm.
     if is_cc_number_valid(cc_number):
-        # Shows on screen what type is the credit card that has that number.
         print(cc_type(cc_number))
     else:
         print('INVALID')
