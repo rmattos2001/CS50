@@ -1,12 +1,12 @@
 from cs50 import get_int
 
-# Pergunta ao usuário qual a altura da semi-pirâmide, (entre 1 e 8)
+# Asks the user what the height of the semi-pyramid is, (between 1 and 8)
 while True:
     height = get_int('Height: ')
     if 1 <= height <= 8:
         break
 
-# Mostra na tela os blocos da pirâmide
+# Shows the pyramid blocks on the screen
 for c in range(height):
     c += 1
     print(' ' * (height - c) + '#' * c)
