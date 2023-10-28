@@ -9,7 +9,8 @@ Times:
 
 Questions:
 
-Which predictions, if any, proved incorrect as you increased the number of simulations?:0m0,031s 0m0,028s 0m0,037s 0m0,104s 0m0,654s 0m8,027s
+Which predictions, if any, proved incorrect as you increased the number of simulations?:
+0m0,031s 0m0,028s 0m0,037s 0m0,104s 0m0,654s 0m8,027s
 
 Suppose you're charged a fee for each second of compute time your program uses.
 After how many simulations would you call the predictions "good enough"?: 2
