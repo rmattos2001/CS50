@@ -13,4 +13,5 @@ Which predictions, if any, proved incorrect as you increased the number of simul
 100 simulations and especially 10 simulations were not that precise compared to the others.
 
 Suppose you're charged a fee for each second of compute time your program uses.
-After how many simulations would you call the predictions "good enough"?: 2
+After how many simulations would you call the predictions "good enough"?:
+At about 10000 simulations, as it's almost instant for humans on my tests and the numbers are kinda close.
