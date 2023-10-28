@@ -1,12 +1,12 @@
 def main() -> None:
     # Gets credit card number.
-    cc_number = input('Number: ').strip()
+    cc_number = input("Number: ").strip()
 
     # Checks if it's a valid credit card number by Luhn's Algorithm.
     if is_cc_number_valid(cc_number):
         print(cc_type(cc_number))
     else:
-        print('INVALID')
+        print("INVALID")
 
 
 # Gets a number and returns true if it's a valid credit card number by Luhn's Algorithm.
@@ -43,17 +43,17 @@ def cc_type(cc_number: str) -> str:
     len_cc_number = len(cc_number)
 
     # AMEX has 15 digits and starts with 34 or 37.
-    if len_cc_number in [15] and cc_number[:2] in ['34', '37']:
-        return 'AMEX'
+    if len_cc_number in [15] and cc_number[:2] in ["34", "37"]:
+        return "AMEX"
     # MASTERCARD has 16 digits and starts with 51, 52, 53, 54 or 55.
-    elif len_cc_number in [16] and cc_number[:2] in ['51', '52', '53', '54', '55']:
-        return 'MASTERCARD'
+    elif len_cc_number in [16] and cc_number[:2] in ["51", "52", "53", "54", "55"]:
+        return "MASTERCARD"
     # VISA has 13 or 16 digits and starts with 4.
-    elif len_cc_number in [13, 16] and cc_number[0] in ['4']:
-        return 'VISA'
+    elif len_cc_number in [13, 16] and cc_number[0] in ["4"]:
+        return "VISA"
     # If none of those patterns were found, then it's invalid.
     else:
-        return 'INVALID'
+        return "INVALID"
 
 
 main()
