@@ -3,18 +3,17 @@ import sys
 
 
 def main():
-
     # Check for command-line usage
     if len(sys.argv) != 3:
-        print('Usage: python dna.py database_name.csv sequence_name.txt')
+        print("Usage: python dna.py database_name.csv sequence_name.txt")
         return
 
     # Read database csv file into a list variable, a list of dictionaries
-    with open(sys.argv[1], 'r') as database_file:
+    with open(sys.argv[1], "r") as database_file:
         database = list(csv.DictReader(database_file))
 
     # Read DNA sequence txt file into a string variable
-    with open(sys.argv[2], 'r') as sequence_file:
+    with open(sys.argv[2], "r") as sequence_file:
         sequence = sequence_file.read()
 
     # first element is 'name' and we just want the STRs
@@ -26,10 +25,10 @@ def main():
     # Check database for matching profiles
     for individue_data in database:
         # Copy the name of the individue as we are going to delete it
-        name = individue_data['name']
+        name = individue_data["name"]
 
         # Delete the key 'name' because in matches we don't have a key 'name'
-        del individue_data['name']
+        del individue_data["name"]
 
         # If our matches are equal to our individue_data then it's the same individue
         if matches == individue_data:
@@ -38,7 +37,7 @@ def main():
             return
 
     # If no match was found
-    print('No match')
+    print("No match")
     return
 
 
@@ -52,12 +51,10 @@ def longest_match(sequence, subsequence):
 
     # Check each character in sequence for most consecutive runs of subsequence
     for i in range(sequence_length):
-
         # Initialize count of consecutive runs
         count = 0
 
         while True:
-
             # Adjust substring start and end
             start = i + count * subsequence_length
             end = start + subsequence_length
