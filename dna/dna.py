@@ -4,16 +4,41 @@ import sys
 
 def main():
 
-    # TODO: Check for command-line usage
+    # Check for command-line usage
+    if len(sys.argv) != 3:
+        print('Usage: python dna.py database_name.csv sequence_name.txt')
+        return
 
-    # TODO: Read database file into a variable
-    
-    # TODO: Read DNA sequence file into a variable
+    # Read database csv file into a list variable, a list of dictionaries
+    with open(sys.argv[1], 'r') as database_file:
+        database = list(csv.DictReader(database_file))
 
-    # TODO: Find longest match of each STR in DNA sequence
+    # Read DNA sequence txt file into a string variable
+    with open(sys.argv[2], 'r') as sequence_file:
+        sequence = sequence_file.read()
 
-    # TODO: Check database for matching profiles
+    # first element is 'name' and we just want the STRs
+    STRs = list(database[0].keys())[1:]
 
+    # Find longest match of each STR in DNA sequence and put each in a list
+    matches = {STR: str(longest_match(sequence, STR)) for STR in STRs}
+
+    # Check database for matching profiles
+    for individue_data in database:
+        # Copy the name of the individue as we are going to delete it
+        name = individue_data['name']
+
+        # Delete the key 'name' because in matches we don't have a key 'name'
+        del individue_data['name']
+
+        # If our matches are equal to our individue_data then it's the same individue
+        if matches == individue_data:
+            # Print it's name
+            print(name)
+            return
+
+    # If no match was found
+    print('No match')
     return
 
 
@@ -31,9 +56,6 @@ def longest_match(sequence, subsequence):
         # Initialize count of consecutive runs
         count = 0
 
-        # Check for a subsequence match in a "substring" (a subset of characters) within sequence
-        # If a match, move substring to next potential match in sequence
-        # Continue moving substring and checking for matches until out of consecutive matches
         while True:
 
             # Adjust substring start and end
@@ -43,11 +65,11 @@ def longest_match(sequence, subsequence):
             # If there is a match in the substring
             if sequence[start:end] == subsequence:
                 count += 1
-            
+
             # If there is no match in the substring
             else:
                 break
-        
+
         # Update most consecutive matches found
         longest_run = max(longest_run, count)
 
