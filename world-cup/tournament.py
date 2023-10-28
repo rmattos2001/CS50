@@ -4,18 +4,20 @@ import csv
 import sys
 import random
 
-# Number of simluations to run
+# Number of simuulations to run
 N = 1000
 
 
 def main():
-    print(' ')
+
+    print('')
+
     # Ensure correct usage
     if len(sys.argv) != 2:
         sys.exit("Usage: python tournament.py FILENAME")
 
+    # Read teams into memory from file
     teams = []
-    # TODO: Read teams into memory from file
     try:
         file = open(sys.argv[1], 'r')
     except:
@@ -27,8 +29,8 @@ def main():
         teams.append(team)  # Append the team into teams list
         teams[pos]['rating'] = int(teams[pos]['rating'])  # Converts rating of a team to int
 
-    counts = {}
     # TODO: Simulate N tournaments and keep track of win counts
+    counts = {}
     for c in range(N):
         winner = simulate_tournament(teams)
         if winner not in counts:
@@ -40,6 +42,7 @@ def main():
         print(f"{team}: {counts[team] * 100 / N:.1f}% chance of winning")
 
     print('')
+
 
 def simulate_game(team1, team2):
     """Simulate a game. Return True if team1 wins, False otherwise."""
@@ -65,15 +68,15 @@ def simulate_round(teams):
 
 def simulate_tournament(teams):
     """Simulate a tournament. Return name of winning team."""
-    # TODO
     winners = teams
 
-    # It will simulate the events until there is only one winner.
+    # Will simulate rounds until theres only one winner
     while len(winners) > 1:
         winners = simulate_round(winners)
 
     # Returns the name of that winner
     return winners[0]['team']
+
 
 if __name__ == "__main__":
     main()
