@@ -14,6 +14,7 @@ Which predictions, if any, proved incorrect as you increased the number of simul
 0m0,028s
 0m0,037s
 0m0,104s
+0m0,654s
 
 Suppose you're charged a fee for each second of compute time your program uses.
 After how many simulations would you call the predictions "good enough"?: 0m0,049s
