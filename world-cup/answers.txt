@@ -1,6 +1,6 @@
 Times:
 
-10 simulations: 0m0,031s
+10 simulations: 0m0,027s
 100 simulations: 0m0,028s
 1000 simulations: 0m0,037s
 10000 simulations: 0m0,104s
