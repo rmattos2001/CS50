@@ -25,7 +25,6 @@ def is_cc_number_valid(cc_number: str) -> bool:
             # Accordingly to Luhn's Algorithm we should multiply the digit to 2.
             product = digit * 2
 
-            # And then sums the digits of that product, to the sum of all odd indexes digits products.
             sum_odd_idx_digits += product if product < 10 else 1 + (product % 10)
 
         # If that digit is on an even index, like "1" or "3" in 123.
@@ -40,7 +39,7 @@ def is_cc_number_valid(cc_number: str) -> bool:
     return True if sum_of_sums % 10 == 0 else False
 
 
-# Gets a valid credit card number by Luhn's Algorithm and returns its type.
+# Gets a valid credit card number by Luhn's Algorithm.
 def cc_type(cc_number: str) -> str:
     len_cc_number = len(cc_number)
 
