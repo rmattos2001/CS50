@@ -68,7 +68,7 @@ def simulate_tournament(teams):
     # TODO
     winners = teams
 
-    # Will simulate rounds until theres only one winner
+    # It will simulate the events until there is only one winner.
     while len(winners) > 1:
         winners = simulate_round(winners)
 
