@@ -12,7 +12,6 @@ IMG_HEIGHT = 30
 NUM_CATEGORIES = 43
 TEST_SIZE = 0.4
 
-
 def main():
 
     # Check command-line arguments
@@ -42,7 +41,6 @@ def main():
         filename = sys.argv[2]
         model.save(filename)
         print(f"Model saved to {filename}.")
-
 
 def load_data(data_dir):
     """
@@ -80,25 +78,14 @@ def get_model():
         tf.keras.layers.Conv2D(
             32, (3, 3), activation="relu", input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)
         ),
-
-
         tf.keras.layers.MaxPooling2D(pool_size=(2, 2)), # Max-pooling layer, using 2x2 pool size
-
         tf.keras.layers.Conv2D(
             32, (3, 3), activation="relu", input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)
         ),
-
-
         tf.keras.layers.MaxPooling2D(pool_size=(2, 2)), # Max-pooling layer, using 2x2 pool size
-
-
         tf.keras.layers.Flatten(), # Flatten units
-
-
         tf.keras.layers.Dense(128, activation="relu"), # Add a hidden layer with dropout
         tf.keras.layers.Dropout(0.5),
-
-
         tf.keras.layers.Dense(NUM_CATEGORIES, activation="softmax")# Add an output layer with output units for all 10 digits
     ])
 
@@ -109,7 +96,6 @@ def get_model():
     )
 
     return model
-
 
 if __name__ == "__main__":
     main()
