@@ -1,6 +1,7 @@
 import nltk
+import re
 import sys
-import string
+nltk.download('punkt')
 
 TERMINALS = """
 Adj -> "country" | "dreadful" | "enigmatical" | "little" | "moist" | "red"
@@ -23,6 +24,7 @@ NA -> Det | Adj | NA NA
 VP -> V | V SUPP
 SUPP -> NP | P | Adv | SUPP SUPP | SUPP SUPP SUPP
 """
+
 grammar = nltk.CFG.fromstring(NONTERMINALS + TERMINALS)
 parser = nltk.ChartParser(grammar)
 
@@ -67,10 +69,14 @@ def preprocess(sentence):
     and removing any word that does not contain at least one alphabetic
     character.
     """
+     # Regex pattern to match words with at least one alphabetic character
+    pattern = re.compile(".*[a-z].*")
 
-    tokenized = nltk.tokenize.word_tokenize(sentence)
-    return [x.lower() for x in tokenized if x.isalpha()]
+    # Word tokenize lower-cased sentence and remove all pure non-alphabetic words
+    words = nltk.word_tokenize(sentence.lower())
+    words = [word for word in words if pattern.match(word)]
 
+    return words
 
 def np_chunk(tree):
     """
