@@ -72,7 +72,7 @@ def preprocess(sentence):
      # Regex pattern to match words with at least one alphabetic character
     pattern = re.compile(".*[a-z].*")
 
-    # Word tokenize lower-cased sentence and remove all pure non-alphabetic words
+    # word tokenizes lowercase sentences and removes all non-alphabetic words
     words = nltk.word_tokenize(sentence.lower())
     words = [word for word in words if pattern.match(word)]
 
