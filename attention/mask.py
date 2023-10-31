@@ -40,7 +40,7 @@ def main():
     visualize_attentions(inputs.tokens(), result.attentions)
 
 
-def get_mask_token_index(mask_token_id, inputs):
+(mask_token_id, inputs):
     """
     Return the index of the token with the specified `mask_token_id`, or
     `None` if not present in the `inputs`.
