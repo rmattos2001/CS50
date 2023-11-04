@@ -1,1 +1,1 @@
-SELECT count(*) FROM movies WHERE year >= 2018 ORDER BY title ASC;
+SELECT COUNT(movie_id) FROM ratings WHERE rating = 10;
