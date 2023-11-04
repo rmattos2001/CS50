@@ -1,3 +1,4 @@
 SELECT title, rating FROM movies
-JOIN ratings ON movie_id = movies.id
-WHERE year = "2010" GROUP BY title ORDER BY rating DESC;
+    JOIN ratings ON movies.id = ratings.movie_id
+    WHERE year = "2010" ORDER BY rating DESC, title
+    LIMIT 10;
