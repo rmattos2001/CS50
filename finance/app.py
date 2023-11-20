@@ -223,7 +223,9 @@ def quote():
         return render_template("quote.html")
     else:
         symbol = request.form.get("symbol")
-        
+
+        if not symbol:
+            return apology("Most Give Symbol")
 
 
 
