@@ -232,6 +232,8 @@ def quote():
         if stock == None:
             return apology("Symbol Does Not Exist")
 
+        return render_template("quote.html")
+
 
 
 @app.route("/register", methods=["GET", "POST"])
