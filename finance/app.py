@@ -158,17 +158,153 @@ def logout():
 @login_required
 def quote():
     """Get stock quote."""
-    return apology("TODO")
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+        symbol = request.form.get("symbol")
+        # Ensure symbol is not blank
+        if symbol == "":
+            return apology("input is blank", 400)
+
+        stock_quote = lookup(symbol)
+
+        if not stock_quote:
+            return apology("INVALID SYMBOL", 400)
+        else:
+            return render_template("quoted.html", symbol=stock_quote)
+
+    # User reached route via GET
+    else:
+        return render_template("quote.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
-    return apology("TODO")
+    # Forget any user_id
+    session.clear()
+
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+
+        # Validate submission
+        username = request.form.get("username")
+        password = request.form.get("password")
+        confirmation = request.form.get("confirmation")
+
+        # Query database for username
+        rows = db.execute("SELECT * FROM users WHERE username = ?", username)
+
+        # Ensure password == confirmation
+        if not (password == confirmation):
+            return apology("the passwords do not match", 400)
+
+        # Ensure password not blank
+        if password == "" or confirmation == "" or username == "":
+            return apology("input is blank", 400)
+
+        # Ensure username does not exists already
+        if len(rows) == 1:
+            return apology("username already exist", 400)
+        else:
+            hashcode = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
+            db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", username, hashcode)
+
+        # Redirect user to home page
+        return redirect("/")
+
+    else:
+        return render_template("register.html")
 
 
 @app.route("/sell", methods=["GET", "POST"])
 @login_required
 def sell():
     """Sell shares of stock"""
-    return apology("TODO")
+    if request.method == "POST":
+        symbol = request.form.get("symbol")
+        shares_nbr = request.form.get("shares")
+
+        # Ensure symbol is not blank
+        if symbol == "":
+            return apology("MISSING SYMBOL", 400)
+        if shares_nbr == "" or shares_nbr.isalpha():
+            return apology("MISSING SHARES", 400)
+        if not is_int(shares_nbr):
+            return apology("fractional not supported", 400)
+        if int(shares_nbr) <= 0:
+            return apology("share number can't be negative number or zero!", 400)
+        stock_quote = lookup(symbol)
+
+        if not stock_quote:
+            return apology("INVALID SYMBOL", 400)
+
+        user_portfolio = db.execute(
+            "SELECT id, symbol, SUM(shares) FROM trades WHERE id = ? AND symbol = ? GROUP BY symbol HAVING SUM(shares)>0 ", session["user_id"], stock_quote['symbol'])
+        user_cash = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
+
+        user_cash = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
+
+        if user_portfolio[0]["SUM(shares)"] < int(shares_nbr):
+            return apology("TOO MANY SHARES", 400)
+        else:
+            # update user_portfolio with based on sell transaction info
+
+            currentprice = stock_quote['price'] * int(shares_nbr)
+            cash = user_cash[0]["cash"]
+            db.execute("UPDATE users SET cash = ? WHERE id = ?", cash + currentprice, session["user_id"])
+            db.execute("INSERT INTO trades (id, symbol, name, shares, price) VALUES(?, ?, ?, ?, ?)",
+                       session["user_id"], stock_quote['symbol'], stock_quote['name'], -int(shares_nbr), stock_quote['price'])
+            flash('Sold!')
+        return redirect("/")
+
+    # User reached route via GET
+    else:
+        user_portfolio = db.execute(
+            "SELECT id, symbol, SUM(shares) FROM trades WHERE id = ? GROUP BY symbol HAVING SUM(shares)>0 ORDER BY symbol", session["user_id"])
+
+        return render_template("sell.html", user_portfolio=user_portfolio)
+
+    @app.route("/settings")
+@login_required
+def settings():
+    """Show settings"""
+    # Query database
+    username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+    return render_template("settings.html", username=username[0]['username'])
+
+
+@app.route("/passwordupdate", methods=["GET", "POST"])
+@login_required
+def passwordupdate():
+    """Show settings"""
+
+    if request.method == "POST":
+
+        # Validate submission
+        currentpassword = request.form.get("currentpassword")
+        newpassword = request.form.get("newpassword")
+        confirmation = request.form.get("confirmation")
+
+        # Query database for username
+        rows = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
+
+        # Ensure password == confirmation
+        if not (newpassword == confirmation):
+            return apology("the passwords do not match", 400)
+
+        # Ensure password not blank
+        if currentpassword == "" or newpassword == "" or confirmation == "":
+            return apology("input is blank", 400)
+
+       # Ensure password is correct
+        if not check_password_hash(rows[0]["hash"], currentpassword):
+            return apology("invalid password", 403)
+        else:
+            hashcode = generate_password_hash(newpassword, method='pbkdf2:sha256', salt_length=8)
+            db.execute("UPDATE users SET hash = ? WHERE id = ?", hashcode, session["user_id"])
+
+        # Redirect user to settings
+        return redirect("/settings")
+
+    else:
+        return render_template("passwordupdate.html")
