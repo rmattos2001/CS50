@@ -96,84 +96,11 @@ def buy():
         db.execute("Update users Set cash = cash - : total_cost Where id = : user_id, total_cost = total_cost, user_id=session["user_id"])
 
         # Add the purchase to the history table
-        db.execute("Insert into transaccions(user_id, symbol, shares, price) Where id = : user_id, total_cost = total_cost, user_id=session["user_id"])
+        db.execute("Insert into transaccions(user_id, symbol, shares, price) Values(:user_id, :symbol, :shares, :price)",
+                   user_id=session["user_id"], symbol=symbol, shares=shares, price=price)
 
-    if request.method == "POST":
-        # Ensure symbol was submitted
-        if not request.form.get("symbol"):
-            return apology("missing symbol", 400)
-        else:
-            symbol = request.form.get("symbol")
-            # Check if the symbol is valid
-            quote = get_quote_info(symbol)
-            if quote is None:
-                return apology("invalid symbol", 400)
-            else:
-                symbol = quote["symbol"]
-
-        # Ensure number of shares was submitted
-        if not request.form.get("shares"):
-            return apology("missing shares", 403)
-        else:
-            # Check if the number of shares is valid
-            shares = try_parse_int(request.form.get("shares"))
-            if shares is None or shares <= 0:
-                return apology("inavlid number of shares", 400)
-
-        # Retrieve cash on the account
-        cash = get_cash(user_id)
-
-        # Check the feasibility of the operation
-        cost = shares * quote["price"]
-        if cost > cash:
-            return apology("can't afford", 400)
-        else:
-            cash -= cost
-
-        # Query database for shares
-        rows = db.execute(
-            "SELECT shares FROM portfolio WHERE user_id = ? AND symbol = ?",
-            user_id,
-            symbol,
-        )
-
-        # Update the Portfolio
-        if len(rows) == 0:
-            db.execute(
-                "INSERT INTO portfolio (user_id,symbol,shares) VALUES (?,?,?)",
-                user_id,
-                symbol,
-                shares,
-            )
-        else:
-            updated_shares = int(rows[0]["shares"]) + shares
-            db.execute(
-                "UPDATE portfolio SET shares = ? WHERE user_id = ? AND symbol = ?",
-                updated_shares,
-                user_id,
-                symbol,
-            )
-
-        # Update transactions book
-        db.execute(
-            "INSERT INTO transactions (user_id,symbol,shares,price) VALUES (?,?,?,?)",
-            user_id,
-            symbol,
-            shares,
-            quote["price"],
-        )
-
-        # Update cash availability  on the account
-        db.execute(
-            "UPDATE users SET cash = ? WHERE id = ?",
-            cash,
-            user_id,
-        )
-
-        # Redirect user to home page
+        flash(f"Bought {shares} shares of {symbol} for {usd(total_cost)}!")
         return redirect("/")
-
-    # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("buy.html")
 
