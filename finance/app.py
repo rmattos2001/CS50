@@ -93,7 +93,7 @@ def buy():
             return apology("symbol not found")
 
         # Update users table
-        db.execute("Update users Set cash = cash - : total_cost Where id = : user_id, total_cost = total_cost, user_id=session["user_id"])
+        db.execute("Update users Set cash = cash - : total_cost Where id = : user_id", total_cost = total_cost, user_id=session["user_id"])
 
         # Add the purchase to the history table
         db.execute("Insert into transaccions(user_id, symbol, shares, price) Values(:user_id, :symbol, :shares, :price)",
