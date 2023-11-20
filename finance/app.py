@@ -35,14 +35,120 @@ def after_request(response):
 @login_required
 def index():
     """Show portfolio of stocks"""
-    return apology("TODO")
+    # Retrieve user id
+    user_id = session["user_id"]
+
+    # Query database for portfolio
+    shares = db.execute(
+        "SELECT symbol, shares FROM portfolio WHERE user_id = ?",
+        user_id,
+    )
+
+    # Retrive and Compute portfolio info
+    total = get_cash(user_id)
+    for share in shares:
+        quote = get_quote_info(share["symbol"], name=True)
+        share["name"] = quote["name"]
+        share["price"] = usd(quote["price"])
+        shares_value = float(quote["price"]) * int(share["shares"])
+        share["total"] = usd(shares_value)
+        total += shares_value
+        print(share)
+
+    # Display the home page
+    return render_template(
+        "index.html",
+        shares=shares,
+        cash=get_cash(user_id, usd_format=True),
+        total=usd(total),
+    )
 
 
 @app.route("/buy", methods=["GET", "POST"])
 @login_required
 def buy():
     """Buy shares of stock"""
-    return apology("TODO")
+    # Retrieve user id
+    user_id = session["user_id"]
+
+    if request.method == "POST":
+        # Ensure symbol was submitted
+        if not request.form.get("symbol"):
+            return apology("missing symbol", 400)
+        else:
+            symbol = request.form.get("symbol")
+            # Check if the symbol is valid
+            quote = get_quote_info(symbol)
+            if quote is None:
+                return apology("invalid symbol", 400)
+            else:
+                symbol = quote["symbol"]
+
+        # Ensure number of shares was submitted
+        if not request.form.get("shares"):
+            return apology("missing shares", 403)
+        else:
+            # Check if the number of shares is valid
+            shares = try_parse_int(request.form.get("shares"))
+            if shares is None or shares <= 0:
+                return apology("inavlid number of shares", 400)
+
+        # Retrieve cash on the account
+        cash = get_cash(user_id)
+
+        # Check the feasibility of the operation
+        cost = shares * quote["price"]
+        if cost > cash:
+            return apology("can't afford", 400)
+        else:
+            cash -= cost
+
+        # Query database for shares
+        rows = db.execute(
+            "SELECT shares FROM portfolio WHERE user_id = ? AND symbol = ?",
+            user_id,
+            symbol,
+        )
+
+        # Update the Portfolio
+        if len(rows) == 0:
+            db.execute(
+                "INSERT INTO portfolio (user_id,symbol,shares) VALUES (?,?,?)",
+                user_id,
+                symbol,
+                shares,
+            )
+        else:
+            updated_shares = int(rows[0]["shares"]) + shares
+            db.execute(
+                "UPDATE portfolio SET shares = ? WHERE user_id = ? AND symbol = ?",
+                updated_shares,
+                user_id,
+                symbol,
+            )
+
+        # Update transactions book
+        db.execute(
+            "INSERT INTO transactions (user_id,symbol,shares,price) VALUES (?,?,?,?)",
+            user_id,
+            symbol,
+            shares,
+            quote["price"],
+        )
+
+        # Update cash availability  on the account
+        db.execute(
+            "UPDATE users SET cash = ? WHERE id = ?",
+            cash,
+            user_id,
+        )
+
+        # Redirect user to home page
+        return redirect("/")
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("buy.html")
 
 
 @app.route("/history")
