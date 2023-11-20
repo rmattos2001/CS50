@@ -218,21 +218,15 @@ def logout():
 def quote():
     """Get stock quote."""
 
-    if request.method == "GET":
+    if request.method == "POST":
         # Ensure symbol was submitted
-        return render_template("quote.html")
-    else:
         symbol = request.form.get("symbol")
-
-        if not symbol:
-            return apology("Most Give Symbol")
-
-        stock = lookup(symbol.upper())
-
-        if stock == None:
-            return apology("Symbol Does Not Exist")
-
-        return render_template("quote.html", name = stock["name"], price=stock["price"], symbol=stock["symbol"])
+        quote = lookup(symbol)
+        if not quote:
+            return apology("Invalid symbol",400)
+        return render_template("quote.html",quote=quote)
+    else:
+        return render_template("quote.html")
 
 
 
