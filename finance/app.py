@@ -245,7 +245,7 @@ def quote():
             return apology("invalid symbol", 400)
 
         # Shows stock name and price
-        return render_template("quoted.html", stock=stock)
+        return render_template("quoted.html", name=stock["name"],price = sotck["price"] )
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
