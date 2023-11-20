@@ -217,17 +217,158 @@ def logout():
 @login_required
 def quote():
     """Get stock quote."""
-    return apology("TODO")
+   if request.method == "POST":
+        # Ensure symbol was submitted
+        if not request.form.get("symbol"):
+            return apology("missing symbol", 400)
+        else:
+            symbol = request.form.get("symbol")
+
+        # Retrieve quote info
+        quote = get_quote_info(symbol, name=True, usd_format=True)
+        if quote is None:
+            return apology("invalid symbol", 400)
+
+        # Redirect user to quote info page
+        return render_template("quoted.html", quote=quote)
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("quote.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
-    return apology("TODO")
+    if request.method == "POST":
+        # Ensure username was submitted
+        if not request.form.get("username"):
+            return apology("must provide username", 400)
+
+        # Ensure password was submitted
+        elif not request.form.get("password"):
+            return apology("must provide password", 400)
+
+        # Ensure confirmation password was submitted
+        elif not request.form.get("confirmation"):
+            return apology("must provide confirmation password", 400)
+
+        # Retrive submitted data
+        else:
+            username = request.form.get("username")
+            password = request.form.get("password")
+            confirmation = request.form.get("confirmation")
+
+        # Query database for username
+        rows = db.execute(
+            "SELECT * FROM users WHERE username = ?", request.form.get("username")
+        )
+
+        # Ensure username is not already in use and the two password matches
+        if len(rows) != 0:
+            return apology("invalid username", 400)
+        elif password != confirmation:
+            return apology("invalid confirmation password", 400)
+
+        # Generate password hash
+        hash = generate_password_hash(request.form.get("password"))
+
+        # Add the new user into the database
+        db.execute("INSERT INTO users (username,hash) VALUES (?,?)", username, hash)
+
+        # Redirect user to login form
+        return redirect("/")
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("register.html")
 
 
 @app.route("/sell", methods=["GET", "POST"])
 @login_required
 def sell():
     """Sell shares of stock"""
-    return apology("TODO")
+    # Retirve user id
+    user_id = session["user_id"]
+
+    # Query database for portfolio
+    shares = db.execute(
+        "SELECT symbol FROM  portfolio WHERE user_id = ?",
+        user_id,
+    )
+
+    if request.method == "POST":
+        # Ensure share was submitted
+        if not request.form.get("symbol"):
+            return apology("missing symbol", 400)
+        else:
+            symbol = request.form.get("symbol")
+            # Check if the symbol is valid
+            quote = get_quote_info(symbol)
+            if quote is None:
+                return apology("invalid symbol", 400)
+            else:
+                symbol = quote["symbol"]
+
+        # Ensure number of share was submitted
+        if not request.form.get("shares"):
+            return apology("missing shares", 400)
+        else:
+            # Check if the number of shares is valid
+            shares = try_parse_int(request.form.get("shares"))
+            if shares is None or shares <= 0:
+                return apology("inavlid number of shares", 400)
+
+        # Query database for number of shares
+        row = db.execute(
+            "SELECT shares FROM portfolio WHERE user_id = ? AND symbol = ?",
+            user_id,
+            symbol,
+        )
+        total_shares = int(row[0]["shares"])
+
+        # Check the feasibility of the operation
+        if shares > total_shares:
+            return apology("too many shares", 400)
+        else:
+            total_shares -= shares
+
+        # Update the Portfolio
+        if total_shares == 0:
+            db.execute(
+                "DELETE FROM portfolio WHERE user_id = ? AND symbol = ?",
+                user_id,
+                symbol,
+            )
+        else:
+            db.execute(
+                "UPDATE portfolio SET shares = ? WHERE user_id = ? AND symbol = ?",
+                total_shares,
+                user_id,
+                symbol,
+            )
+
+        # Update transactions book
+        db.execute(
+            "INSERT INTO transactions (user_id,symbol,shares,price) VALUES (?,?,?,?)",
+            user_id,
+            symbol,
+            -shares,
+            quote["price"],
+        )
+
+        # Update cash on the account
+        cash = get_cash(user_id)
+        received = shares * quote["price"]
+        cash += received
+        db.execute(
+            "UPDATE users SET cash = ? WHERE id = ?",
+            cash,
+            user_id,
+        )
+
+        # Redirect user to home page
+        return redirect("/")
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("sell.html", shares=shares)
