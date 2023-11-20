@@ -226,6 +226,7 @@ def quote():
         
 
 
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
