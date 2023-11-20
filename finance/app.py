@@ -72,6 +72,30 @@ def buy():
     user_id = session["user_id"]
 
     if request.method == "POST":
+        symbol = request.form.get("symbol").upper()
+        shares = request.form.get("shares")
+
+        if not symbol:
+            return apology("must provide symbol")
+        elif not shares or not shares.isdigit() or int(shared) <=0;
+            return apology("must provide a positive integer number of shares")
+
+        quote = lookup(symbol)
+
+        if qoute is None:
+            return apology("symbol not found")
+
+        price = quote["price"]
+        total_cost = int(shares) * price
+        cash = db.execute("Select cash from users where id= : user_id", user_id=session["user_id"])[0]["Cash"]
+
+        if cash < total_cost:
+            return apology("symbol not found")
+
+        # Update users table
+        db.execute("Update users Set cash = cash - : total_cost Where id = : user_id, total_cost = total_cost, user_id=session["user_id"])
+
+    if request.method == "POST":
         # Ensure symbol was submitted
         if not request.form.get("symbol"):
             return apology("missing symbol", 400)
