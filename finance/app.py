@@ -217,7 +217,7 @@ def logout():
 @login_required
 def quote():
     """Get stock quote."""
-   if request.method == "POST":
+    if request.method == "POST":
         # Ensure symbol was submitted
         if not request.form.get("symbol"):
             return apology("missing symbol", 400)
@@ -288,87 +288,4 @@ def register():
 @login_required
 def sell():
     """Sell shares of stock"""
-    # Retirve user id
-    user_id = session["user_id"]
-
-    # Query database for portfolio
-    shares = db.execute(
-        "SELECT symbol FROM  portfolio WHERE user_id = ?",
-        user_id,
-    )
-
-    if request.method == "POST":
-        # Ensure share was submitted
-        if not request.form.get("symbol"):
-            return apology("missing symbol", 400)
-        else:
-            symbol = request.form.get("symbol")
-            # Check if the symbol is valid
-            quote = get_quote_info(symbol)
-            if quote is None:
-                return apology("invalid symbol", 400)
-            else:
-                symbol = quote["symbol"]
-
-        # Ensure number of share was submitted
-        if not request.form.get("shares"):
-            return apology("missing shares", 400)
-        else:
-            # Check if the number of shares is valid
-            shares = try_parse_int(request.form.get("shares"))
-            if shares is None or shares <= 0:
-                return apology("inavlid number of shares", 400)
-
-        # Query database for number of shares
-        row = db.execute(
-            "SELECT shares FROM portfolio WHERE user_id = ? AND symbol = ?",
-            user_id,
-            symbol,
-        )
-        total_shares = int(row[0]["shares"])
-
-        # Check the feasibility of the operation
-        if shares > total_shares:
-            return apology("too many shares", 400)
-        else:
-            total_shares -= shares
-
-        # Update the Portfolio
-        if total_shares == 0:
-            db.execute(
-                "DELETE FROM portfolio WHERE user_id = ? AND symbol = ?",
-                user_id,
-                symbol,
-            )
-        else:
-            db.execute(
-                "UPDATE portfolio SET shares = ? WHERE user_id = ? AND symbol = ?",
-                total_shares,
-                user_id,
-                symbol,
-            )
-
-        # Update transactions book
-        db.execute(
-            "INSERT INTO transactions (user_id,symbol,shares,price) VALUES (?,?,?,?)",
-            user_id,
-            symbol,
-            -shares,
-            quote["price"],
-        )
-
-        # Update cash on the account
-        cash = get_cash(user_id)
-        received = shares * quote["price"]
-        cash += received
-        db.execute(
-            "UPDATE users SET cash = ? WHERE id = ?",
-            cash,
-            user_id,
-        )
-
-        # Redirect user to home page
-        return redirect("/")
-    # User reached route via GET (as by clicking a link or via redirect)
-    else:
-        return render_template("sell.html", shares=shares)
+    return apology("TODO")
