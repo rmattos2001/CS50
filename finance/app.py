@@ -95,6 +95,9 @@ def buy():
         # Update users table
         db.execute("Update users Set cash = cash - : total_cost Where id = : user_id, total_cost = total_cost, user_id=session["user_id"])
 
+        # Add the purchase to the history table
+        
+
     if request.method == "POST":
         # Ensure symbol was submitted
         if not request.form.get("symbol"):
