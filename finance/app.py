@@ -232,7 +232,7 @@ def quote():
         if stock == None:
             return apology("Symbol Does Not Exist")
 
-        return render_template("quote.html")
+        return render_template("quote.html", name = stock["name"], price=stock["price"], symbol=stock["symbol"])
 
 
 
