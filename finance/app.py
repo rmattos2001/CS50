@@ -56,14 +56,55 @@ def index():
 @login_required
 def buy():
     """Buy shares of stock"""
-    return apology("TODO")
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+        symbol = request.form.get("symbol")
+        shares_nbr = request.form.get("shares")
+
+        # Ensure symbol is not blank
+        if symbol == "":
+            return apology("MISSING SYMBOL", 400)
+        if shares_nbr == "" or shares_nbr.isalpha():
+            return apology("MISSING SHARES", 400)
+        if not is_int(shares_nbr):
+            return apology("fractional not supported", 400)
+        if int(shares_nbr) <= 0:
+            return apology("share number can't be negative number or zero!", 400)
+
+        stock_quote = lookup(symbol)
+
+        if not stock_quote:
+            return apology("INVALID SYMBOL", 400)
+
+        total_cost = int(shares_nbr) * stock_quote["price"]
+
+        user_cash = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
+
+        if user_cash[0]["cash"] < total_cost:
+            return apology("CAN'T AFFORD", 400)
+
+        else:
+            db.execute("INSERT INTO trades (id, symbol, name, shares, price) VALUES(?, ?, ?, ?, ?)",
+                       session["user_id"], stock_quote['symbol'], stock_quote['name'], int(shares_nbr), stock_quote['price'])
+            cash = user_cash[0]["cash"]
+            db.execute("UPDATE users SET cash = ? WHERE id = ?", cash - total_cost, session["user_id"])
+            flash('Bought!')
+            return redirect("/")
+
+    # User reached route via GET
+    else:
+        return render_template("buy.html")
 
 
 @app.route("/history")
 @login_required
 def history():
     """Show history of transactions"""
-    return apology("TODO")
+    # Query database for username & transactions
+    user_transactions = db.execute(
+        "SELECT id, symbol, shares, price, transacted  FROM trades WHERE id = ? ORDER BY transacted", session["user_id"])
+
+    return render_template("history.html", user_transactions=user_transactions)
 
 
 @app.route("/login", methods=["GET", "POST"])
