@@ -69,7 +69,7 @@ def index():
 def buy():
     """Buy shares of stock"""
     # Retrieve user id
-    user_id = session["user_id"]
+
 
     if request.method == "POST":
         symbol = request.form.get("symbol").upper()
@@ -77,7 +77,7 @@ def buy():
 
         if not symbol:
             return apology("must provide symbol")
-        elif not shares or not shares.isdigit() or int(shared) <=0;
+        elif not shares or not shares.isdigit() or int(shared) <=0:
             return apology("must provide a positive integer number of shares")
 
         quote = lookup(symbol)
