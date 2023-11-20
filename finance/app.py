@@ -227,6 +227,11 @@ def quote():
         if not symbol:
             return apology("Most Give Symbol")
 
+        stock = lookup(symbol.upper())
+
+        if stock == None:
+            return apology("Symbol Does Not Exist")
+
 
 
 @app.route("/register", methods=["GET", "POST"])
