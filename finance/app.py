@@ -41,6 +41,7 @@ def index():
     # Query user stocks and shares
     stocks = db.execute(
         "SELECT symbol, sum(shares) as total_shares FROM transactions WHERE user_id = :user_id GROUP BY symbol HAVING total_shares>0",
+        NOTE THE "," off screen
         user_id=session["user_id"])
 
     # Get user's cash balance
