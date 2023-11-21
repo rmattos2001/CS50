@@ -46,6 +46,14 @@ def index():
     # Get user's cash balance
     cash = db.execute("SELECT cash from users WHERE id =:user_id", user_id=session["user_id"])[0]["cash"]
 
+    #Inicialize variables for total values
+    total_value = cash
+    grand_total = cash
+
+    # Iterate over stocks and add pric and total value
+    for stock in stocks:
+        quote = lookup(stock[""])
+
     # Retrive and Compute portfolio info
     total = get_cash(user_id)
     for share in shares:
