@@ -59,7 +59,7 @@ def index():
         total_value += stock["value"]
         grand_value += stock["value"]
 
-    return render_template("")
+    return render_template("index.html", stocks=stocks, cash=cash, total_value=total_value)
 
 
     # Retrive and Compute portfolio info
