@@ -38,11 +38,13 @@ def index():
     # Retrieve user id
     user_id = session["user_id"]
 
-    # Query database for portfolio
-    shares = db.execute(
+    # Query user stocks and shares
+    stocks = db.execute(
         "SELECT symbol, sum(shares) as total_shares FROM transactions WHERE user_id = :user_id GROUP BY symbol HAVING total_shares>0",
-        user_id=session["user_id"],
-    )
+        user_id=session["user_id"])
+
+    # Get user's cash balance
+    cash = db.execute("SELECT cash from users WHERE id =:user_id", user_id=session["user_id"])[0]["cash"]
 
     # Retrive and Compute portfolio info
     total = get_cash(user_id)
