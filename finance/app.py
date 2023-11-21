@@ -40,8 +40,8 @@ def index():
 
     # Query database for portfolio
     shares = db.execute(
-        "SELECT symbol, shares FROM portfolio WHERE user_id = ?",
-        user_id,
+        "SELECT symbol, sum(shares) as total_shares FROM transactions WHERE user_id = :user_id GROUP BY symbol HAVING total_shares>0",
+        user_id=session["user_id"],
     )
 
     # Retrive and Compute portfolio info
