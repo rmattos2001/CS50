@@ -48,7 +48,7 @@ def index():
 
     #Inicialize variables for total values
     total_value = cash
-    grand_total = cash
+    grand_value = cash
 
     # Iterate over stocks and add pric and total value
     for stock in stocks:
@@ -60,26 +60,6 @@ def index():
         grand_value += stock["value"]
 
     return render_template("index.html", stocks=stocks, cash=cash, total_value=total_value, grand_value=grand_value)
-
-
-    # Retrive and Compute portfolio info
-    total = get_cash(user_id)
-    for share in shares:
-        quote = get_quote_info(share["symbol"], name=True)
-        share["name"] = quote["name"]
-        share["price"] = usd(quote["price"])
-        shares_value = float(quote["price"]) * int(share["shares"])
-        share["total"] = usd(shares_value)
-        total += shares_value
-        print(share)
-
-    # Display the home page
-    return render_template(
-        "index.html",
-        shares=shares,
-        cash=get_cash(user_id, usd_format=True),
-        total=usd(total),
-    )
 
 
 @app.route("/buy", methods=["GET", "POST"])
