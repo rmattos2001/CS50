@@ -240,7 +240,7 @@ def sell():
 
     # Query database for portfolio
     shares = db.execute(
-        "SELECT symbol FROM  portfolio WHERE user_id = ?",
+        "SELECT symbol FROM  transactions WHERE user_id = ?",
         user_id,
     )
 
