@@ -55,7 +55,11 @@ def index():
         quote = lookup(stock["symbol"])
         stock["name"] = quote["name"]
         stock["price"] = quote["price"]
-        stock["value"] = stock["price"] * stock[""]
+        stock["value"] = stock["price"] * stock["total_shares"]
+        total_value += stock["value"]
+        grand_value += stock["value"]
+
+    return render_template("")
 
 
     # Retrive and Compute portfolio info
