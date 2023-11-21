@@ -1,42 +1,55 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Portfolio
+Portfolio
 {% endblock %}
 
 {% block main %}
-    <table>
-        <thead>
-            <tr>
-                <th class="left">Stock Symbol</th>
-                <th class="left">Name</th>
-                <th class="right">Shares (UN)</th>
-                <th class="right">Current Price (USD)</th>
-                <th class="right">Total (USD)</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for stock in stocks %}
-                <tr>
-                    <td class="left">{{ stock["symbol"] }}</td>
-                    <td class="left">{{ lookup(stock["symbol"])["name"] }}</td>
-                    <td class="right">{{ stock["shares"] }}</td>
-                    <td class="right">{{ lookup(stock["symbol"])["price"] | usd }}</td>
-                    <td class="right">{{ (stock["shares"] * lookup(stock["symbol"])["price"]) | usd }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-        <tfoot>
-            <tr>
-                <td></td><td></td><td></td>
-                <th class="right">Cash (USD)</td>
-                <td class="right">{{ user_cash | usd }}</td>
-            </tr>
-            <tr>
-                <td></td><td></td><td></td>
-                <th class="right">Total (USD)</td>
-                <td class="right">{{ (user_cash + stocks_total_price) | usd }}</td>
-            </tr>
-        </tfoot>
-    </table>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="text-start">Symbol</th>
+            <th class="text-start">Name</th>
+            <th class="text-end">Shares</th>
+            <th class="text-end">Price</th>
+            <th class="text-end">TOTAL</th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for share in shares %}
+        <tr>
+            <td class="text-start">{{ share["symbol"]}}</td>
+            <td class="text-start">{{ share["name"]}}</td>
+            <td class="text-end">{{ share["shares"]}}</td>
+            <td class="text-end">{{ share["price"]}}</td>
+            <td class="text-end">{{ share["total"]}}</td>
+            <td class="text-center">
+                <form method="POST" action="/buy" style="display:inline;">
+                    <input type="hidden" name="symbol" value="{{ share['symbol']}}">
+                    <input type="number" name="shares" min="1" step="1" required style="width: 60px;">
+                    <button class="btn btn-success btn-sm" type="submit">Buy</button>
+                </form>
+                <form method="POST" action="/sell" style="display:inline;">
+                    <input type="hidden" name="symbol" value="{{ share['symbol']}}">
+                    <input type="number" name="shares" min="1" step="1" required style="width: 60px;">
+                    <button class="btn btn-danger btn-sm" type="submit">Sell</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td class="border-0 fw-bold text-end" colspan="4">Cash</td>
+            <td class="border-0 text-end">{{ cash }}</td>
+            <td class="border-0"></td>
+        </tr>
+        <tr>
+            <td class="border-0 fw-bold text-end" colspan="4">TOTAL</td>
+            <td class="border-0 w-bold text-end">{{ total }}</td>
+            <td class="border-0"></td>
+        </tr>
+    </tfoot>
+</table>
 {% endblock %}
