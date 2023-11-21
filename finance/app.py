@@ -52,7 +52,10 @@ def index():
 
     # Iterate over stocks and add pric and total value
     for stock in stocks:
-        quote = lookup(stock[""])
+        quote = lookup(stock["symbol"])
+        stock["name"] = quote["name"]
+        stock["price"] = quote["price"]
+
 
     # Retrive and Compute portfolio info
     total = get_cash(user_id)
