@@ -268,7 +268,7 @@ def sell():
 
         # Query database for number of shares
         row = db.execute(
-            "SELECT shares FROM portfolio WHERE user_id = ? AND symbol = ?",
+            "SELECT shares FROM transactions WHERE user_id = ? AND symbol = ?",
             user_id,
             symbol,
         )
@@ -283,13 +283,13 @@ def sell():
         # Update the Portfolio
         if total_shares == 0:
             db.execute(
-                "DELETE FROM portfolio WHERE user_id = ? AND symbol = ?",
+                "DELETE FROM transactions WHERE user_id = ? AND symbol = ?",
                 user_id,
                 symbol,
             )
         else:
             db.execute(
-                "UPDATE portfolio SET shares = ? WHERE user_id = ? AND symbol = ?",
+                "UPDATE transactions SET shares = ? WHERE user_id = ? AND symbol = ?",
                 total_shares,
                 user_id,
                 symbol,
