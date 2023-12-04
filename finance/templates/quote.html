@@ -5,17 +5,13 @@
 {% endblock %}
 
 {% block main %}
-    <h1>Get a Stock Quote</h1>
-    <div class="mb-3">
-        <form action="{{url_for('quote')}}" method="post">
-            <label for="symbol">Symbol</label>
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="symbol" name="symbol"
-                    placeholder="Symbol" type="text">
-            <button class="btn btn-primary" type="submit">Get Quote</button>
-        </form>
-    </div>
-    {%if quote%}
-        <h3>{{quote['name']} ({{quote['symbol']}})</h3>
-        <p>Price : {{ quote['price']|usd}}</p>
-    {% endif %}
+    <form action="/quote" method="post">
+        <div class="mb-3">
+            <label for="symbol">Stock Symbol</label>
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="symbol" name="symbol" placeholder="e.g. AAPL" required type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
 {% endblock %}
