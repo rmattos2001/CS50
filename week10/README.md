@@ -296,12 +296,12 @@ All functions above are provided by Flask[^6], with the exception of 'valid_pass
 These functions are quite straightforward, and their main purposes have been explained further above. For more information, check out ['Argon2 CFFI Library'](https://argon2-cffi.readthedocs.io/en/stable/argon2.html) and [`cryptography`](https://cryptography.io/en/latest/).
 
 Here’s the list:
-- [`generate_hash`](/security.py#L20)
-- [`check_password`](/security.py#L25)
-- [`check_rehash`](/security.py#L34)
-- [`derive_key`](/security.py#L34)
-- [`encrypt`](/security.py#L34)
-- [`decrypt`](/security.py#L67)
+- [`generate_hash`](security.py#L20)
+- [`check_password`](security.py#L25)
+- [`check_rehash`](security.py#L34)
+- [`derive_key`](security.py#L34)
+- [`encrypt`](security.py#L34)
+- [`decrypt`](security.py#L67)
 
 ## Frontend
 ### 'static' and 'templates'
