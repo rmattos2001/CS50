@@ -4,12 +4,12 @@ YouTube link: https://www.youtube.com/watch?v=6gIjukx4Ch8
 > Please, do not store your real passwords into this program!
 
 > [!NOTE]
-> I made the decision not to deploy this project for a straightforward reason: I'm not a cryptographer. My approach involved following library instructions and attempting to be sensible while developing this web application. The immense complexity in this field, coupled with the ever-evolving threats and attacks driven by advancements in technology and computational power, led me to the conclusion that I shouldn't solely depend on users to act reasonably by heeding my advice not to store their actual passwords in this program.  
+> I made the decision not to deploy this project for a straightforward reason: I'm not a cryptographer. My approach involved following library instructions and attempting to be sensible while developing this web application. The immense complexity in this field, coupled with the ever-evolving threats and attacks driven by advancements in technology and computational power, led me to the conclusion that I shouldn't solely depend on users to act reasonably by heeding my advice not to store their actual passwords in this program.
 
 ## Introduction
 This repository was submitted as the final project for CS50X 2023 online course offered by Harvard University. It’s a web application built around Flask’s framework and some software development/web programming languages covered by the course, such as Python, JavaScript, SQL, HTML and CSS. The application is designed for storing passwords.
 
-The central component of the application is the **password vault**, where the user can **store**, **retrieve**, **upload** and **delete** their credentials from other sites or apps, which encompass domains, usernames, and passwords. To enable these interactions, the main application is **supported by additional files**, that contain **utilities** and **security** functions. 
+The central component of the application is the **password vault**, where the user can **store**, **retrieve**, **upload** and **delete** their credentials from other sites or apps, which encompass domains, usernames, and passwords. To enable these interactions, the main application is **supported by additional files**, that contain **utilities** and **security** functions.
 
 Here's an overview of the interface:
 
@@ -18,7 +18,7 @@ Here's an overview of the interface:
 The project files follow the layout guidelines of [Flask](https://flask.palletsprojects.com/en/2.3.x/tutorial/layout/), but in a simplified manner. The root files are `app.py`, `helpers.py`, `security.py` and `schema.sql`, serving as the **backend** of the application. Regarding the **frontend**, it is divided into two folders: `static` and `templates`. These folders host user-interactive functionality scripts, a style sheet and svgs, and HTML content, respectively.
 
 ### Hashing and Encryption
-When handling **passwords, storing them directly in the database is _never_ advisable**. Instead, it is essential to hash the password using a robust hashing function. This process renders the password nearly impossible to retrieve without the actual knowledge of the password itself. 
+When handling **passwords, storing them directly in the database is _never_ advisable**. Instead, it is essential to hash the password using a robust hashing function. This process renders the password nearly impossible to retrieve without the actual knowledge of the password itself.
 
 With that in mind, passwords provided by the user during the registration process for the application are hashed through the Argon2[^1] algorithm via a [CFFI library](https://argon2-cffi.readthedocs.io/en/stable/argon2.html).
 
@@ -49,7 +49,7 @@ The topics discussed above are illustrated below:
 This file is where most of the server logic resides. The first lines of code (1-25) start with the usual import declarations, some server configurations, the definition of the server Fernet key, which is a binary string used for encryption, and a function for closing the database connection when the application context[^4] is popped.
 
 The next lines of code refer to the different routes of the application:
-- [`register`](https://github.com/abfarias/CS50-Final-Project/blob/main/app.py#L123)
+- [`register`](/workspaces/40253744/week10/app.py#L123)
 - [`login`](https://github.com/abfarias/CS50-Final-Project/blob/main/app.py#L199)
 - [`index`](https://github.com/abfarias/CS50-Final-Project/blob/main/app.py#L34)
 - [`import_file`](https://github.com/abfarias/CS50-Final-Project/blob/main/app.py#L418)
@@ -98,7 +98,7 @@ elif request.form.get('password') != request.form.get('confirmation'):
 flash('Passwords does not match!', 'danger')
 return render_template('register.html')
 ```
-These code snippets illustrate how the flash function conveys information about the status of the route's procedures. The first argument represents the message to be displayed, while the second argument determines the message type, which, in turn, influences the color of the pop-up. 
+These code snippets illustrate how the flash function conveys information about the status of the route's procedures. The first argument represents the message to be displayed, while the second argument determines the message type, which, in turn, influences the color of the pop-up.
 
 Success messages appear in green, warnings in yellow, primary messages in blue, and danger messages in red.
 
@@ -124,7 +124,7 @@ Here's the corresponding JavaScript and Python code for `DELETE`:
 // Create confirmation interface for deleting a password
     const rows = document.getElementsByName('tbody-row')
     const deleteButtons = document.getElementsByName('delete')
-    
+
     for (let i = 0, length = deleteButtons.length; i < length; i++) {
 
         const row = rows[i]
@@ -162,12 +162,12 @@ Here's the corresponding JavaScript and Python code for `DELETE`:
  # User reached route via DELETE
     elif request.method == 'DELETE':
         delete_info = request.get_json()
-        
+
         if delete_info is not None:
             query_db('DELETE FROM passwords WHERE id = ?', [delete_info['id']])
             flash('Password deleted!', 'danger')
             return jsonify({'success': True}), 200
-        
+
         else:
             return redirect('/')
 ```
@@ -196,14 +196,14 @@ This function is provided by the [Argon2 CFFI library](https://argon2-cffi.readt
 ```
 
 #### `Key derivation steps`
-As mentioned earlier, key derivation takes place during the registration process and is repeated every time a user logs in. 
+As mentioned earlier, key derivation takes place during the registration process and is repeated every time a user logs in.
 
 The code from `register`:
 ```
 # Derive encryption from master password
         salt = os.urandom(16)
-        key = derive_key(request.form.get('master_password', type=str), salt) 
-        
+        key = derive_key(request.form.get('master_password', type=str), salt)
+
         session['user_key'] = key
 
         # Store the username, hashed passwords and encrypted salt into the database
@@ -249,7 +249,7 @@ For the encryption to work, an instance of the `Fernet` class has to be created 
 ```
 from cryptography.fernet import Fernet
 key = Fernet.generate_key()
-f = Fernet(key) 
+f = Fernet(key)
 ```
 However, **storing this instance in a session for later use across other routes is not viable**. Instead, the generated key must be assigned to a variable and then stored in the session. This approach creates the need to instantiate the Fernet key within the current route whenever there's a need to perform data encryption or decryption.
 
@@ -281,11 +281,11 @@ for item in list:
 These processes are performed quite often and can be found at many `routes`.
 
 ### [`helpers.py`](/helpers.py)
-This file contains several useful functions that aid the main file objectives. 
-Here is the list: 
+This file contains several useful functions that aid the main file objectives.
+Here is the list:
 - [`get_db`](https://github.com/abfarias/CS50-Final-Project/blob/main/helpers.py#L10): Establishes a connection with the SQLite3 database
 - [`make_dicts`](https://github.com/abfarias/CS50-Final-Project/blob/main/helpers.py#L16): Dictionary factory, returns rows in the database as dictionaries
-- [`query_db`](https://github.com/abfarias/CS50-Final-Project/blob/main/helpers.py#L25): Allows for easy and safe execution of commands in the database 
+- [`query_db`](https://github.com/abfarias/CS50-Final-Project/blob/main/helpers.py#L25): Allows for easy and safe execution of commands in the database
 - [`login_required`](https://github.com/abfarias/CS50-Final-Project/blob/main/helpers.py#L36): Decorates the routes so they can only be accessed when the user is logged in
 - [`allowed_extensions`](https://github.com/abfarias/CS50-Final-Project/blob/main/helpers.py#L50): Checks if the file extension is allowed
 - [`valid_password`](https://github.com/abfarias/CS50-Final-Project/blob/main/helpers.py#L60): Defines a set of rules a password must follow to be considered valid
@@ -309,9 +309,9 @@ Here’s the list:
 These folders contain files related to the application's design. The `static` folder contains images, .js and .css files, while the `templates` folder houses .html files.
 
 ### Layout, JavaScript and CSS
-The layout was adapted from the course’s final problem set (Finance) while adding new features, such as password visibility togglers, modals, confirmation and editing interfaces, and dropdown menus.  
+The layout was adapted from the course’s final problem set (Finance) while adding new features, such as password visibility togglers, modals, confirmation and editing interfaces, and dropdown menus.
 
-The idea behind the design was to created an interactive table, where the user could perform almost any operation within the same route. This was achieved with the use of JavaScript methods and Bootstrap components 
+The idea behind the design was to created an interactive table, where the user could perform almost any operation within the same route. This was achieved with the use of JavaScript methods and Bootstrap components
 
 The CSS file was not heavily utilized, mainly because Bootstrap provided appealing default styles. Nevertheless, some HTML elements required specific positioning adjustments, prompting occasional use of the `style` tag.
 
