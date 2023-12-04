@@ -49,8 +49,8 @@ The topics discussed above are illustrated below:
 This file is where most of the server logic resides. The first lines of code (1-25) start with the usual import declarations, some server configurations, the definition of the server Fernet key, which is a binary string used for encryption, and a function for closing the database connection when the application context[^4] is popped.
 
 The next lines of code refer to the different routes of the application:
-- [`register`](/workspaces/40253744/week10/app.py#L123)
-- [`login`](https://github.com/abfarias/CS50-Final-Project/blob/main/app.py#L199)
+- [`register`](app.py#L123)
+- [`login`](app.py#L199)
 - [`index`](https://github.com/abfarias/CS50-Final-Project/blob/main/app.py#L34)
 - [`import_file`](https://github.com/abfarias/CS50-Final-Project/blob/main/app.py#L418)
 - [`change_password`](https://github.com/abfarias/CS50-Final-Project/blob/main/app.py#L288)
