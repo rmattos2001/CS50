@@ -279,33 +279,33 @@ for item in list:
 ```
 These processes are performed quite often and can be found at many `routes`.
 
-### [`helpers.py`](/helpers.py)
+### ['helpers.py'](/helpers.py)
 This file contains several useful functions that aid the main file objectives.
 Here is the list:
-- [`get_db`](https://github.com/abfarias/CS50-Final-Project/blob/main/helpers.py#L10): Establishes a connection with the SQLite3 database
-- [`make_dicts`](https://github.com/abfarias/CS50-Final-Project/blob/main/helpers.py#L16): Dictionary factory, returns rows in the database as dictionaries
-- [`query_db`](https://github.com/abfarias/CS50-Final-Project/blob/main/helpers.py#L25): Allows for easy and safe execution of commands in the database
-- [`login_required`](https://github.com/abfarias/CS50-Final-Project/blob/main/helpers.py#L36): Decorates the routes so they can only be accessed when the user is logged in
-- [`allowed_extensions`](https://github.com/abfarias/CS50-Final-Project/blob/main/helpers.py#L50): Checks if the file extension is allowed
-- [`valid_password`](https://github.com/abfarias/CS50-Final-Project/blob/main/helpers.py#L60): Defines a set of rules a password must follow to be considered valid
+- ['get_db'](helpers.py#L10): Establishes a connection with the SQLite3 database
+- ['make_dicts'](helpers.py#L16): Dictionary factory, returns rows in the database as dictionaries
+- ['query_db'](helpers.py#L25): Allows for easy and safe execution of commands in the database
+- ['login_required'](helpers.py#L36): Decorates the routes so they can only be accessed when the user is logged in
+- ['allowed_extensions'](helpers.py#L50): Checks if the file extension is allowed
+- ['valid_password'](helpers.py#L60): Defines a set of rules a password must follow to be considered valid
 
-All functions above are provided by Flask[^6], with the exception of `valid_password`.
+All functions above are provided by Flask[^6], with the exception of 'valid_password'.
 
-### [`security.py`](/security.py)
+### ['security.py'](/security.py)
 **This file contains all the security-related functions, abstracting them away from the main file for better organization**.
-These functions are quite straightforward, and their main purposes have been explained further above. For more information, check out [`Argon2 CFFI Library`](https://argon2-cffi.readthedocs.io/en/stable/argon2.html) and [`cryptography`](https://cryptography.io/en/latest/).
+These functions are quite straightforward, and their main purposes have been explained further above. For more information, check out ['Argon2 CFFI Library'](https://argon2-cffi.readthedocs.io/en/stable/argon2.html) and ['cryptography'](https://cryptography.io/en/latest/).
 
 Here’s the list:
-- [`generate_hash`](https://github.com/abfarias/CS50-Final-Project/blob/main/security.py#L20)
-- [`check_password`](https://github.com/abfarias/CS50-Final-Project/blob/main/security.py#L25)
-- [`check_rehash`](https://github.com/abfarias/CS50-Final-Project/blob/main/security.py#L34)
-- [`derive_key`](https://github.com/abfarias/CS50-Final-Project/blob/main/security.py#L34)
-- [`encrypt`](https://github.com/abfarias/CS50-Final-Project/blob/main/security.py#L34)
-- [`decrypt`](https://github.com/abfarias/CS50-Final-Project/blob/main/security.py#L67)
+- ['generate_hash'](security.py#L20)
+- ['check_password'](security.py#L25)
+- ['check_rehash'](security.py#L34)
+- ['derive_key'](security.py#L34)
+- ['encrypt'](security.py#L34)
+- ['decrypt'](security.py#L67)
 
 ## Frontend
-### `static` and `templates`
-These folders contain files related to the application's design. The `static` folder contains images, .js and .css files, while the `templates` folder houses .html files.
+### 'static' and 'templates'
+These folders contain files related to the application's design. The `static` folder contains images, .js and .css files, while the 'templates' folder houses .html files.
 
 ### Layout, JavaScript and CSS
 The layout was adapted from the course’s final problem set (Finance) while adding new features, such as password visibility togglers, modals, confirmation and editing interfaces, and dropdown menus.
@@ -315,22 +315,22 @@ The idea behind the design was to created an interactive table, where the user c
 The CSS file was not heavily utilized, mainly because Bootstrap provided appealing default styles. Nevertheless, some HTML elements required specific positioning adjustments, prompting occasional use of the `style` tag.
 
 ## Room for improvement and Vulnerabilities
-### `The issue with symmetric encryption`
+### 'The issue with symmetric encryption'
 As it currently stands, even with the precautions taken to avoid storing unencrypted salts in the database and the generation of a new key with each login, the encryption remains symmetric. This means that if an attacker gains access to the key, they would still be able to decrypt the data and obtain the passwords from the user.
 A better, but more complex, solution for this problem would be to implement an asymmetric encryption method. In this setup, both the sender and the receiver have their own private and public keys, allowing for the encryption and decryption of data without the exposure of the private keys in the database[^7].
 
-### `The lack of Two-Factor Authentication (2FA)`
+### 'The lack of Two-Factor Authentication (2FA)'
 Nowadays, it has become a standard practice for all online services to incorporate 2FA. However, this feature is currently absent in this application, leaving users more vulnerable to an attacker with access to their credentials.
 So, an obvious next step, in the event of a further project development, it would be the implementation of an 2FA system.
 
-### `Server key is exposed`
-The `SERVER_KEY` exposure in the main file is a potential security concern. If this application were to be deployed, a different file architecture would be required. This would involve the use of an application factory pattern and assigning the `SEVER_KEY` to the `SECRET_KEY` [Flask’s convention]( https://flask.palletsprojects.com/en/2.3.x/tutorial/factory/) for enchanced security.
+### 'Server key is exposed'
+The 'SERVER_KEY' exposure in the main file is a potential security concern. If this application were to be deployed, a different file architecture would be required. This would involve the use of an application factory pattern and assigning the `SEVER_KEY` to the `SECRET_KEY` [Flask’s convention]( https://flask.palletsprojects.com/en/2.3.x/tutorial/factory/) for enchanced security.
 
 ### `Better responsiveness for smaller screens`
 The main aspect of the layout is the interactive table. However, on smaller screens the table doesn’t resize properly and instead overflows beyond the right side of the screen. I tried to ease this situation by including the `table-responsive` [Bootstrap class]( https://getbootstrap.com/docs/5.3/content/tables/#responsive-tables), that allows tables to be scrolled horizontally. Nonetheless, a general resize would look and feel a lot better. But this issue was noticed after the application logic had been already built around the table.
 
 ### `Spaghetti JavaScript code`
-Here's a code snippet from [`index.js`](static/index.js):
+Here's a code snippet from ['index.js'](static/index.js):
 ```
 row.removeChild(domainCell)
 row.removeChild(usernameCell)
