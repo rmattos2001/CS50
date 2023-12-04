@@ -135,7 +135,6 @@ Here's the corresponding JavaScript and Python code for `DELETE`:
             const id = row.getAttribute('id')
 
             // Send a DELETE http request if user's confirmation is true
-            // Adapted from: https://www.youtube.com/watch?v=cuEtnrL9-H0
             if (confirm('Are you sure you want to delete this password?')) {
                 fetch('/', {
                     method: 'DELETE',
