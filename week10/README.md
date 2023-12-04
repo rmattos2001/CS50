@@ -282,12 +282,12 @@ These processes are performed quite often and can be found at many `routes`.
 ### [`helpers.py`](/helpers.py)
 This file contains several useful functions that aid the main file objectives.
 Here is the list:
-- [`get_db`](helpers.py#L10): Establishes a connection with the SQLite3 database
-- [`make_dicts`](helpers.py#L16): Dictionary factory, returns rows in the database as dictionaries
-- [`query_db`](helpers.py#L25): Allows for easy and safe execution of commands in the database
-- [`login_required`](helpers.py#L36): Decorates the routes so they can only be accessed when the user is logged in
-- [`allowed_extensions`](helpers.py#L50): Checks if the file extension is allowed
-- [`valid_password`](helpers.py#L60): Defines a set of rules a password must follow to be considered valid
+- [`get_db`](/helpers.py#L10): Establishes a connection with the SQLite3 database
+- [`make_dicts`](/helpers.py#L16): Dictionary factory, returns rows in the database as dictionaries
+- [`query_db`](/helpers.py#L25): Allows for easy and safe execution of commands in the database
+- [`login_required`](/helpers.py#L36): Decorates the routes so they can only be accessed when the user is logged in
+- [`allowed_extensions`](/helpers.py#L50): Checks if the file extension is allowed
+- [`valid_password`](/helpers.py#L60): Defines a set of rules a password must follow to be considered valid
 
 All functions above are provided by Flask[^6], with the exception of 'valid_password'.
 
@@ -296,12 +296,12 @@ All functions above are provided by Flask[^6], with the exception of 'valid_pass
 These functions are quite straightforward, and their main purposes have been explained further above. For more information, check out ['Argon2 CFFI Library'](https://argon2-cffi.readthedocs.io/en/stable/argon2.html) and [`cryptography`](https://cryptography.io/en/latest/).
 
 Here’s the list:
-- [`generate_hash`](security.py#L20)
-- [`check_password`](security.py#L25)
-- [`check_rehash`](security.py#L34)
-- [`derive_key`](security.py#L34)
-- [`encrypt`](security.py#L34)
-- [`decrypt`](security.py#L67)
+- [`generate_hash`](/security.py#L20)
+- [`check_password`](/security.py#L25)
+- [`check_rehash`](/security.py#L34)
+- [`derive_key`](/security.py#L34)
+- [`encrypt`](/security.py#L34)
+- [`decrypt`](/security.py#L67)
 
 ## Frontend
 ### 'static' and 'templates'
