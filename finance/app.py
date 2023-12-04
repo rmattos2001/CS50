@@ -35,14 +35,24 @@ def after_request(response):
 @login_required
 def index():
     """Show portfolio of stocks"""
-    stocks = db.execute("SELECT symbol, shares FROM stocks WHERE user_id = ?;", session["user_id"])
-    user_cash = db.execute("SELECT cash FROM users WHERE id = ?;", session["user_id"])[0]["cash"]
+    stocks = db.execute(
+        "SELECT symbol, shares FROM stocks WHERE user_id = ?;", session["user_id"]
+    )
+    user_cash = db.execute("SELECT cash FROM users WHERE id = ?;", session["user_id"])[
+        0
+    ]["cash"]
 
     stocks_total_price = 0
     for stock in stocks:
         stocks_total_price += lookup(stock["symbol"])["price"] * stock["shares"]
 
-    return render_template("index.html", user_cash=user_cash, lookup=lookup, stocks=stocks, stocks_total_price=stocks_total_price)
+    return render_template(
+        "index.html",
+        user_cash=user_cash,
+        lookup=lookup,
+        stocks=stocks,
+        stocks_total_price=stocks_total_price,
+    )
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -51,7 +61,6 @@ def buy():
     """Buy shares of stock"""
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-
         symbol = request.form.get("symbol")
         shares = request.form.get("shares")
 
@@ -70,7 +79,9 @@ def buy():
         elif not shares.isdigit() or int(shares) < 1:
             return apology("invalid shares", 400)
 
-        user_cash = db.execute("SELECT cash FROM users WHERE id = ?;", session["user_id"])[0]["cash"]
+        user_cash = db.execute(
+            "SELECT cash FROM users WHERE id = ?;", session["user_id"]
+        )[0]["cash"]
         shares_total_price = stock["price"] * int(shares)
 
         # Ensure user has enough money to buy shares
@@ -78,17 +89,31 @@ def buy():
             return apology("can't afford")
 
         # Insert the new purchase into transactions, along with the stock symbol and price
-        db.execute("INSERT INTO transactions (user_id, symbol, price, shares, type) VALUES (?, ?, ?, ?, 'purchase');",
-                   session["user_id"], stock["symbol"], stock["price"], shares)
+        db.execute(
+            "INSERT INTO transactions (user_id, symbol, price, shares, type) VALUES (?, ?, ?, ?, 'purchase');",
+            session["user_id"],
+            stock["symbol"],
+            stock["price"],
+            shares,
+        )
 
         # Insert the stocks bought into stocks, along with the stock symbol
-        db.execute("INSERT INTO stocks (user_id, symbol, shares) VALUES (?, ?, ?);", session["user_id"], stock["symbol"], shares)
+        db.execute(
+            "INSERT INTO stocks (user_id, symbol, shares) VALUES (?, ?, ?);",
+            session["user_id"],
+            stock["symbol"],
+            shares,
+        )
 
         # Subtract user cash used into that purchase
-        db.execute("UPDATE users SET cash = ? WHERE id = ?;", user_cash - shares_total_price, session["user_id"])
+        db.execute(
+            "UPDATE users SET cash = ? WHERE id = ?;",
+            user_cash - shares_total_price,
+            session["user_id"],
+        )
 
         # Success message
-        flash('Bought!')
+        flash("Bought!")
 
         # Redirect user to home page
         return redirect("/")
@@ -103,7 +128,10 @@ def buy():
 def history():
     """Show history of transactions"""
 
-    transactions = db.execute("SELECT symbol, shares, price, type, date FROM transactions WHERE user_id = ?;", session["user_id"])
+    transactions = db.execute(
+        "SELECT symbol, shares, price, type, date FROM transactions WHERE user_id = ?;",
+        session["user_id"],
+    )
 
     return render_template("history.html", transactions=transactions)
 
@@ -117,7 +145,6 @@ def login():
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-
         # Ensure username was submitted
         if not request.form.get("username"):
             return apology("must provide username", 403)
@@ -127,10 +154,14 @@ def login():
             return apology("must provide password", 403)
 
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+        rows = db.execute(
+            "SELECT * FROM users WHERE username = ?", request.form.get("username")
+        )
 
         # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+        if len(rows) != 1 or not check_password_hash(
+            rows[0]["hash"], request.form.get("password")
+        ):
             return apology("invalid username and/or password", 403)
 
         # Remember which user has logged in
@@ -154,17 +185,19 @@ def logout():
     # Redirect user to login form
     return redirect("/")
 
+
 @app.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
     """Show user his username and allow to change username or password"""
 
     # Gets username
-    username = db.execute("SELECT username FROM users WHERE id = ?;", session["user_id"])[0]["username"]
+    username = db.execute(
+        "SELECT username FROM users WHERE id = ?;", session["user_id"]
+    )[0]["username"]
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-
         new_username = request.form.get("new-username")
 
         new_password = request.form.get("new-password")
@@ -172,23 +205,31 @@ def profile():
 
         current_password = request.form.get("current-password")
 
-        current_password_hash = db.execute("SELECT hash FROM users WHERE id = ?;", session["user_id"])[0]["hash"]
+        current_password_hash = db.execute(
+            "SELECT hash FROM users WHERE id = ?;", session["user_id"]
+        )[0]["hash"]
 
         # Ensure passwords are the same
         if not check_password_hash(current_password_hash, current_password):
             return apology("passwords are not the same", 403)
 
         elif new_username:
-
             # Ensure username is unique
-            if len(db.execute("SELECT username FROM users WHERE username = ?;", new_username)):
+            if len(
+                db.execute(
+                    "SELECT username FROM users WHERE username = ?;", new_username
+                )
+            ):
                 return apology("username already in use", 403)
 
             # Update username
-            db.execute("UPDATE users SET username = ? WHERE id = ?;", new_username, session["user_id"])
+            db.execute(
+                "UPDATE users SET username = ? WHERE id = ?;",
+                new_username,
+                session["user_id"],
+            )
 
         if new_password:
-
             # Ensure password has atleast 8 characters
             if not len(new_password) >= 8:
                 return apology("password need atleast 8 characters", 403)
@@ -202,10 +243,14 @@ def profile():
                 return apology("new password and current are the same", 403)
 
             # Update password
-            db.execute("UPDATE users SET hash = ? WHERE id = ?;", generate_password_hash(new_password), session["user_id"])
+            db.execute(
+                "UPDATE users SET hash = ? WHERE id = ?;",
+                generate_password_hash(new_password),
+                session["user_id"],
+            )
 
         # Success message
-        flash('Username changed!') if new_username else flash('Password changed!')
+        flash("Username changed!") if new_username else flash("Password changed!")
 
         return redirect("/profile")
 
@@ -218,7 +263,6 @@ def profile():
 def quote():
     """Get stock quote."""
     if request.method == "POST":
-
         symbol = request.form.get("symbol")
 
         # Search for the stock
@@ -241,7 +285,6 @@ def register():
     """Register user"""
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-
         username = request.form.get("username")
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
@@ -251,7 +294,9 @@ def register():
             return apology("must provide username", 400)
 
         # Ensure username is unique
-        elif len(db.execute("SELECT username FROM users WHERE username = ?;", username)):
+        elif len(
+            db.execute("SELECT username FROM users WHERE username = ?;", username)
+        ):
             return apology("username already in use", 400)
 
         # Ensure password was submitted
@@ -267,10 +312,14 @@ def register():
             return apology("passwords must be the same", 400)
 
         # Insert the new user into users and store a hash of the user’s password
-        db.execute("INSERT INTO users (username, hash) VALUES (?, ?);", username, generate_password_hash(password))
+        db.execute(
+            "INSERT INTO users (username, hash) VALUES (?, ?);",
+            username,
+            generate_password_hash(password),
+        )
 
         # Success message
-        flash('Registered!')
+        flash("Registered!")
 
         # Redirect user to home page
         return redirect("/")
@@ -286,7 +335,6 @@ def sell():
     """Sell shares of stock"""
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-
         symbol = request.form.get("symbol")
         shares = request.form.get("shares")
 
@@ -305,7 +353,11 @@ def sell():
         elif not shares.isdigit() or int(shares) < 1:
             return apology("invalid shares", 400)
 
-        stocks = db.execute("SELECT shares FROM stocks WHERE user_id = ? AND symbol = ?;", session["user_id"], symbol)
+        stocks = db.execute(
+            "SELECT shares FROM stocks WHERE user_id = ? AND symbol = ?;",
+            session["user_id"],
+            symbol,
+        )
 
         # Ensure user has that stock
         if not len(stocks):
@@ -315,31 +367,52 @@ def sell():
         elif not stocks[0]["shares"] >= int(shares):
             return apology("too many shares", 400)
 
-        user_cash = db.execute("SELECT cash FROM users WHERE id = ?;", session["user_id"])[0]["cash"]
+        user_cash = db.execute(
+            "SELECT cash FROM users WHERE id = ?;", session["user_id"]
+        )[0]["cash"]
         shares_total_price = stock["price"] * int(shares)
 
         # Insert the new selling into transactions, along with the stock symbol and price
-        db.execute("INSERT INTO transactions (user_id, symbol, price, shares, type) VALUES (?, ?, ?, ?, 'sale');",
-                   session["user_id"], stock["symbol"], stock["price"], shares)
+        db.execute(
+            "INSERT INTO transactions (user_id, symbol, price, shares, type) VALUES (?, ?, ?, ?, 'sale');",
+            session["user_id"],
+            stock["symbol"],
+            stock["price"],
+            shares,
+        )
 
         # Subtract the stocks selled if after the selling the quantity is bigger than zero
         if stocks[0]["shares"] - int(shares) >= 1:
-            db.execute("UPDATE stocks SET shares = ? WHERE user_id = ? AND symbol = ?;",
-                       stocks[0]["shares"] - int(shares), session["user_id"], stock["symbol"])
+            db.execute(
+                "UPDATE stocks SET shares = ? WHERE user_id = ? AND symbol = ?;",
+                stocks[0]["shares"] - int(shares),
+                session["user_id"],
+                stock["symbol"],
+            )
         # Delete if it's zero
         else:
-            db.execute("DELETE FROM stocks WHERE user_id = ? AND symbol = ?;", session["user_id"], stock["symbol"])
+            db.execute(
+                "DELETE FROM stocks WHERE user_id = ? AND symbol = ?;",
+                session["user_id"],
+                stock["symbol"],
+            )
 
         # Add user cash earned by that selling
-        db.execute("UPDATE users SET cash = ? WHERE id = ?;", user_cash + shares_total_price, session["user_id"])
+        db.execute(
+            "UPDATE users SET cash = ? WHERE id = ?;",
+            user_cash + shares_total_price,
+            session["user_id"],
+        )
 
         # Success message
-        flash('Sold!')
+        flash("Sold!")
 
         # Redirect user to home page
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-        stocks = db.execute("SELECT symbol FROM stocks WHERE user_id = ?;", session["user_id"])
+        stocks = db.execute(
+            "SELECT symbol FROM stocks WHERE user_id = ?;", session["user_id"]
+        )
         return render_template("sell.html", stocks=stocks)
