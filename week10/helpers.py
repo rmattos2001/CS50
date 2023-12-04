@@ -1,35 +1,43 @@
-import csv
-import datetime
-import pytz
-import requests
-import subprocess
-import urllib
-import uuid
-
-from flask import redirect, render_template, session
+import sqlite3
+from flask import redirect, session, g
 from functools import wraps
 
+ALLOWED_EXTENSIONS = {'csv'}
 
-def apology(message, code=400):
-    """Render message as an apology to user."""
-    def escape(s):
-        """
-        Escape special characters.
+# Start of Flask configuration for sqlite3 usage
+DATABASE = 'safepass.db'
 
-        https://github.com/jacebrowning/memegen#special-characters
-        """
-        for old, new in [("-", "--"), (" ", "-"), ("_", "__"), ("?", "~q"),
-                         ("%", "~p"), ("#", "~h"), ("/", "~s"), ("\"", "''")]:
-            s = s.replace(old, new)
-        return s
-    return render_template("apology.html", top=code, bottom=escape(message)), code
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(DATABASE)
+
+    # Return rows as dictonaries instead of tuples
+    def make_dicts(cursor, row):
+        return dict((cursor.description[idx][0], value)
+                for idx, value in enumerate(row))
+
+    db.row_factory = make_dicts
+
+    return db
+
+
+def query_db(query, args=(), one=False):
+    cur = get_db().execute(query, args)
+    rv = cur.fetchall()
+    cur.close()
+    g._database.commit()
+    return (rv[0] if rv else None) if one else rv
+
+# End of Flask configuration for sqlite3 usage
+# https://flask.palletsprojects.com/en/2.3.x/patterns/sqlite3/
 
 
 def login_required(f):
     """
     Decorate routes to require login.
 
-    http://flask.pocoo.org/docs/0.12/patterns/viewdecorators/
+    https://flask.palletsprojects.com/en/1.1.x/patterns/viewdecorators/
     """
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -39,40 +47,38 @@ def login_required(f):
     return decorated_function
 
 
-def lookup(symbol):
-    """Look up quote for symbol."""
+def allowed_extensions(filename: str):
+    """
+    Checks if file extension is allowed
 
-    # Prepare API request
-    symbol = symbol.upper()
-    end = datetime.datetime.now(pytz.timezone("US/Eastern"))
-    start = end - datetime.timedelta(days=7)
-
-    # Yahoo Finance API
-    url = (
-        f"https://query1.finance.yahoo.com/v7/finance/download/{urllib.parse.quote_plus(symbol)}"
-        f"?period1={int(start.timestamp())}"
-        f"&period2={int(end.timestamp())}"
-        f"&interval=1d&events=history&includeAdjustedClose=true"
-    )
-
-    # Query API
-    try:
-        response = requests.get(url, cookies={"session": str(uuid.uuid4())}, headers={"User-Agent": "python-requests", "Accept": "*/*"})
-        response.raise_for_status()
-
-        # CSV header: Date,Open,High,Low,Close,Adj Close,Volume
-        quotes = list(csv.DictReader(response.content.decode("utf-8").splitlines()))
-        quotes.reverse()
-        price = round(float(quotes[0]["Adj Close"]), 2)
-        return {
-            "name": symbol,
-            "price": price,
-            "symbol": symbol
-        }
-    except (requests.RequestException, ValueError, KeyError, IndexError):
-        return None
+    https://flask.palletsprojects.com/en/2.3.x/patterns/fileuploads/
+    """
+    return '.' in filename and \
+            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-def usd(value):
-    """Format value as USD."""
-    return f"${value:,.2f}"
+def valid_password(password: str, min_length=12, max_length=64):
+    """
+    Checks if password meets certain parameters
+    """
+    if len(password) < min_length or len(password) > max_length:
+        return False
+
+    special = "~`!@#$%^&*()-_+={[}]|\/:;'<>,.?"
+
+    has_uppercase = False
+    has_lowercase = False
+    has_digit = False
+    has_special = False
+
+    for letter in password:
+        if letter.isupper():
+            has_uppercase = True
+        elif letter.islower():
+            has_lowercase = True
+        elif letter.isdigit():
+            has_digit = True
+        elif letter in special:
+            has_special = True
+
+    return has_uppercase and has_lowercase and has_digit and has_special
