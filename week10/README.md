@@ -51,23 +51,23 @@ This file is where most of the server logic resides. The first lines of code (1-
 The next lines of code refer to the different routes of the application:
 - [`register`](app.py#L123)
 - [`login`](app.py#L199)
-- [`index`](https://github.com/abfarias/CS50-Final-Project/blob/main/app.py#L34)
-- [`import_file`](https://github.com/abfarias/CS50-Final-Project/blob/main/app.py#L418)
-- [`change_password`](https://github.com/abfarias/CS50-Final-Project/blob/main/app.py#L288)
-- [`change_master_password`](https://github.com/abfarias/CS50-Final-Project/blob/main/app.py#L337)
-- [`delete_account`](https://github.com/abfarias/CS50-Final-Project/blob/main/app.py#L471)
-- [`logout`](https://github.com/abfarias/CS50-Final-Project/blob/main/app.py#L514)
+- [`index`](app.py#L34)
+- [`import_file`](app.py#L418)
+- [`change_password`](app.py#L288)
+- [`change_master_password`](app.py#L337)
+- [`delete_account`](app.py#L471)
+- [`logout`](app.py#L514)
 
 The route names are quite self-explanatory, and some of them share similar code patterns. Instead of providing detailed explanations for each route, I will describe the common patterns they follow while also highlighting any specific features or nuances.
 
 #### `User input validation`
-**User input and behavior should never be trusted**. This code pattern is present across all routes (except [`logout`](https://github.com/abfarias/CS50-Final-Project/blob/main/app.py#L514)) and is intended to safeguard the system against malicious user inputs, specifically SQL injection attacks and incorrect/incomplete filling of HTML forms. This is achieved by incorporating placeholders in SQL queries and implementing server-side validation.
+**User input and behavior should never be trusted**. This code pattern is present across all routes (except [`logout`](app.py#L514)) and is intended to safeguard the system against malicious user inputs, specifically SQL injection attacks and incorrect/incomplete filling of HTML forms. This is achieved by incorporating placeholders in SQL queries and implementing server-side validation.
 
-The SQL queries are executed by a function called [`query_db`](https://github.com/abfarias/CS50-Final-Project/blob/main/helpers.py#L25) that allows the use of placeholders for queries. The implementation details can be found at [Flask’s website](https://flask.palletsprojects.com/en/2.3.x/patterns/sqlite3/#:~:text=def%20query_db(query%2C%20args%3D()%2C%20one%3DFalse)%3A).
+The SQL queries are executed by a function called [`query_db`](helpers.py#L25) that allows the use of placeholders for queries. The implementation details can be found at [Flask’s website](https://flask.palletsprojects.com/en/2.3.x/patterns/sqlite3/#:~:text=def%20query_db(query%2C%20args%3D()%2C%20one%3DFalse)%3A).
 
-Regarding the HTML forms, every route that is accessed via `POST` begins with a sequence of “if statements” that assess whether the forms have been submitted and whether the provided values are valid. One particular validation used at the [`register`](https://github.com/abfarias/CS50-Final-Project/blob/main/app.py#L123) route is done by a function called [`valid_password`](https://github.com/abfarias/CS50-Final-Project/blob/main/helpers.py#L60). A password and master password are only deemed valid by this function if they contain at least twelve characters, one uppercase letter, one lowercase letter, one number and one special character.
+Regarding the HTML forms, every route that is accessed via `POST` begins with a sequence of “if statements” that assess whether the forms have been submitted and whether the provided values are valid. One particular validation used at the [`register`](app.py#L123) route is done by a function called [`valid_password`](helpers.py#L60). A password and master password are only deemed valid by this function if they contain at least twelve characters, one uppercase letter, one lowercase letter, one number and one special character.
 
-Another specific validation run by the program is done at the [`import_file`](https://github.com/abfarias/CS50-Final-Project/blob/main/app.py#L418) route. In this context, the system must verify whether the file selected by the user is in the right format (CSV files only). The function [`allowed_extension`](https://github.com/abfarias/CS50-Final-Project/blob/main/helpers.py#L50) manages this process, and further implementation details can be found at [Flask’s website]( https://flask.palletsprojects.com/en/2.3.x/patterns/fileuploads/#:~:text=def%20allowed_file(filename)%3A).
+Another specific validation run by the program is done at the [`import_file`](app.py#L418) route. In this context, the system must verify whether the file selected by the user is in the right format (CSV files only). The function [`allowed_extension`](helpers.py#L50) manages this process, and further implementation details can be found at [Flask’s website]( https://flask.palletsprojects.com/en/2.3.x/patterns/fileuploads/#:~:text=def%20allowed_file(filename)%3A).
 
 #### `User feedback`
 While server-side validation is important to maintain system integrity, **providing users with feedback when they make a mistake or when an error occurs is equally crucial to ensure a satisfying user experience**.
@@ -115,7 +115,7 @@ Below is the HTML code section responsible for the actual display of the message
 For more information about flashed messages, check [here]( https://flask.palletsprojects.com/en/2.3.x/patterns/flashing/).
 
 #### `DELETE and UPLOAD HTTP methods`
-These methods are employed by the [`index`](https://github.com/abfarias/CS50-Final-Project/blob/main/app.py#L34) route, allowing users to both delete and edit their credentials from other sites or applications without the need of another route. This was achieved by sending information to the server via JSON format with the JavaScript method `fetch`[^5].
+These methods are employed by the [`index`](app.py#L34) route, allowing users to both delete and edit their credentials from other sites or applications without the need of another route. This was achieved by sending information to the server via JSON format with the JavaScript method `fetch`[^5].
 
 The information is accessed through the `request.get_json` method, encompassing the credential `id` and the user’s chosen action (delete or update).
 
